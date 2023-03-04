@@ -12,11 +12,17 @@
     "@chakra-ui/react": "^2.5.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@tanem/react-nprogress": "^5.0.31",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
     "framer-motion": "^10.0.1",
     "next": "13.2.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-icons": "^4.8.0"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^8.6.0",
+    "prettier": "^2.8.4"
   }
 }

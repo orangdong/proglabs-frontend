@@ -1,0 +1,20 @@
+# Ignore build output
+.next/*
+
+# Ignore node_modules directory
+node_modules
+
+# Ignore configuration files
+*.config.js
+
+# Ignore generated files
+generated/*
+
+# Ignore test files
+**/*.test.js
+
+# Ignore coverage reports
+coverage/*
+
+# Ignore package-lock.json
+package-lock.json
