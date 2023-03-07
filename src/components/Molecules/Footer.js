@@ -1,9 +1,81 @@
 import { Box, Flex, Link, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import NextLink from "next/link";
 
 export default function Footer({ isHome = false }) {
   return (
-    <Box bg={"backgroudDark"}>
+    <Box bg={"backgroudDark"} position={"relative"} mt={isHome ? "370px" : 0}>
+      {isHome ? (
+        <Flex
+          flexDir={"column"}
+          position={"absolute"}
+          z={8}
+          maxW={"1056px"}
+          maxH={"520px"}
+          px={4}
+          py={{ base: "80px", md: "112px" }}
+          backgroundColor={"white"}
+          backgroundImage="url('/assets/footer-card.svg')"
+          backgroundPosition="center"
+          backgroundRepeat="no-repeat"
+          mx={{ base: 4, md: "auto" }}
+          left={0}
+          right={0}
+          top={{ base: "-330px", md: "-370px" }}
+          borderRadius={"32px"}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Flex
+            flexDir={"column"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Text
+              textAlign={"center"}
+              fontWeight="extraBold"
+              fontSize={{ base: "32px", sm: "54px", md: "72px" }}
+            >
+              Improved Membership.
+            </Text>
+            <Text
+              textAlign={"center"}
+              fontWeight="extraBold"
+              fontSize={{ base: "32px", sm: "54px", md: "72px" }}
+            >
+              Gain Knowledge.
+            </Text>
+            <Text
+              textAlign={"center"}
+              fontWeight="semiBold"
+              fontSize={{ base: "16px", md: "22px" }}
+              mt={4}
+              mb={8}
+            >
+              Start your learning journey with us
+            </Text>
+            <Link
+              bg="backgroundTeal"
+              fontWeight={"semiBold"}
+              fontSize={{ base: "16px", md: "18px" }}
+              color={"textWhite"}
+              _hover={{
+                bg: "backgroundTealHover",
+              }}
+              py={3}
+              px={6}
+              borderRadius={"10px"}
+              as={NextLink}
+              href="#"
+            >
+              Explore Courses
+            </Link>
+          </Flex>
+        </Flex>
+      ) : (
+        ""
+      )}
+
       <Flex
         flexDir={"column"}
         maxW={"1280px"}
