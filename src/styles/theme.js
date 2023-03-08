@@ -22,6 +22,13 @@ const theme = extendTheme({
     extraBold: 800,
     black: 900,
   },
+  colors: {
+    backgroundTeal: "#0E7490",
+    backgroundTealHover: "#0A566A",
+    textWhite: "#ECFEFF",
+    textGray: "#656F78",
+    backgroudDark: "#091F2A",
+  },
 });
 
 export default theme;
