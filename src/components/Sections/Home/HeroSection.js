@@ -35,7 +35,7 @@ export default function HeroSection() {
               Your{" "}
               <HighlightedText
                 text={"New Experience"}
-                highlightW="250px"
+                highlightW={{ base: "22px", md: "438px" }}
                 highlight={
                   "linear-gradient(90.07deg, #4FF5D2 38.95%, rgba(255, 255, 255, 0) 117.98%)"
                 }
