@@ -1,7 +1,12 @@
 import { Box } from "@chakra-ui/react";
-export default function HighlightedText({ text, highlight }) {
+export default function HighlightedText({
+  text,
+  highlight,
+  highlightW = "438px",
+  highlightH = "37px",
+}) {
   return (
-    <Box display="inline" position="relative">
+    <Box display="inline" position="relative" whiteSpace={"nowrap"}>
       <Box display={"inline"} zIndex={1}>
         {text}
       </Box>
@@ -10,8 +15,8 @@ export default function HighlightedText({ text, highlight }) {
         zIndex={-10}
         transform={"rotate(-1deg)"}
         bgGradient={highlight}
-        w={"438px"}
-        h={"37px"}
+        w={highlightW}
+        h={highlightH}
         top={5}
         left={0}
       />

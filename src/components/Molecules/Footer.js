@@ -48,7 +48,7 @@ export default function Footer({ isHome = false }) {
             <Text
               textAlign={"center"}
               fontWeight="semiBold"
-              fontSize={{ base: "16px", md: "22px" }}
+              fontSize={{ base: "18px", md: "22px" }}
               mt={4}
               mb={8}
             >
