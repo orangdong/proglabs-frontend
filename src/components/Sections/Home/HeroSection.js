@@ -18,7 +18,6 @@ export default function HeroSection() {
       >
         <Flex
           mt={"60px"}
-          mb={"92px"}
           alignItems={"center"}
           justifyContent={"space-between"}
           w={"full"}
