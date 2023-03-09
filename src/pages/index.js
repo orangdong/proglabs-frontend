@@ -3,6 +3,7 @@ import HeroSection from "@/components/Sections/Home/HeroSection";
 import LogoSection from "@/components/Sections/Home/LogoSection";
 import CourseSection from "@/components/Sections/Home/CourseSection";
 import FeaturesSection from "@/components/Sections/Home/FeaturesSection";
+import PricingSection from "@/components/Sections/Home/PricingSection";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       <LogoSection />
       <CourseSection />
       <FeaturesSection />
+      <PricingSection />
     </GeneralLayout>
   );
 }

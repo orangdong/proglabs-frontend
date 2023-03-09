@@ -66,7 +66,7 @@ export default function Footer({ isHome = false }) {
               px={6}
               borderRadius={"10px"}
               as={NextLink}
-              href="#"
+              href="/courses"
             >
               Explore Courses
             </Link>
