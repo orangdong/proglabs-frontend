@@ -1,19 +1,16 @@
-import Head from "next/head";
-import Navbar from "@/components/Molecules/Navbar";
+import GeneralLayout from "@/components/GeneralLayout";
+import HeroSection from "@/components/Sections/Home/HeroSection";
+import LogoSection from "@/components/Sections/Home/LogoSection";
+import CourseSection from "@/components/Sections/Home/CourseSection";
+import FeaturesSection from "@/components/Sections/Home/FeaturesSection";
 
 export default function Home() {
   return (
-    <>
-      <Head>
-        <title>Proglabs</title>
-        <meta name="description" content="Enchance your learning experience" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main style={{ height: "1000px" }}>
-        <Navbar />
-        This is home page
-      </main>
-    </>
+    <GeneralLayout isHome={true} title={"Home"}>
+      <HeroSection />
+      <LogoSection />
+      <CourseSection />
+      <FeaturesSection />
+    </GeneralLayout>
   );
 }
