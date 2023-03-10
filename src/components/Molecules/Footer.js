@@ -21,7 +21,7 @@ export default function Footer({ isHome = false }) {
           mx={{ base: 4, md: "auto" }}
           left={0}
           right={0}
-          top={{ base: "-330px", md: "-370px" }}
+          top={{ base: "-280px", sm: "-330px", md: "-370px" }}
           borderRadius={"32px"}
           justifyContent="center"
           alignItems="center"
@@ -95,14 +95,14 @@ export default function Footer({ isHome = false }) {
             />
             <Text
               fontWeight={"semiBold"}
-              fontSize="18px"
+              fontSize={{ base: "16px", md: "18px" }}
               mt={4}
               mb={{ base: 5, md: 0 }}
             >
               Enhance your learning experience
             </Text>
           </Box>
-          <Box fontSize="18px" mr={"52px"}>
+          <Box fontSize={{ base: "16px", md: "18px" }} mr={"52px"}>
             <Text fontWeight="semiBold">Company</Text>
             <Link display={"block"} mt={4} href="#">
               About
@@ -117,7 +117,7 @@ export default function Footer({ isHome = false }) {
               Legal
             </Link>
           </Box>
-          <Box fontSize="18px" mr={"52px"}>
+          <Box fontSize={{ base: "16px", md: "18px" }} mr={"52px"}>
             <Text fontWeight="semiBold">Resources</Text>
             <Link display={"block"} mt={4} href="#">
               Blog
@@ -135,7 +135,11 @@ export default function Footer({ isHome = false }) {
               FAQ
             </Link>
           </Box>
-          <Box fontSize="18px" mr={"52px"} mt={{ base: 5, md: 0 }}>
+          <Box
+            fontSize={{ base: "16px", md: "18px" }}
+            mr={"52px"}
+            mt={{ base: 5, md: 0 }}
+          >
             <Text fontWeight="semiBold">Contact</Text>
             <Link display={"block"} mt={4} href="#">
               Customer Support
@@ -144,7 +148,7 @@ export default function Footer({ isHome = false }) {
               Report Abuse
             </Link>
           </Box>
-          <Box fontSize="18px" mt={{ base: 5, md: 0 }}>
+          <Box fontSize={{ base: "16px", md: "18px" }} mt={{ base: 5, md: 0 }}>
             <Text fontWeight="semiBold">Socials</Text>
             <Flex mt={4}>
               <Flex

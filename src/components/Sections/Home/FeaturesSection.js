@@ -52,10 +52,14 @@ export default function FeaturesSection() {
                   width="50"
                   alt="icon"
                 />
-                <Text mt={3} fontSize={"22px"} fontWeight={"semiBold"}>
+                <Text
+                  mt={3}
+                  fontSize={{ base: "18px", md: "22px" }}
+                  fontWeight={"semiBold"}
+                >
                   Exclusive Courses & Community
                 </Text>
-                <Text mt={5} fontSize={"18px"}>
+                <Text mt={5} fontSize={{ base: "16px", md: "18px" }}>
                   Gain access to expert resources, collaborative opportunities,
                   and a supportive environment to take your skills to the next
                   level.
@@ -68,10 +72,14 @@ export default function FeaturesSection() {
                   width="50"
                   alt="icon"
                 />
-                <Text mt={3} fontSize={"22px"} fontWeight={"semiBold"}>
+                <Text
+                  mt={3}
+                  fontSize={{ base: "18px", md: "22px" }}
+                  fontWeight={"semiBold"}
+                >
                   Flexible Membership
                 </Text>
-                <Text mt={5} fontSize={"18px"}>
+                <Text mt={5} fontSize={{ base: "16px", md: "18px" }}>
                   Experience the flexibility with our NFT-based system, allowing
                   you to easily transfer, trade, or resell your membership at
                   any time.
@@ -86,10 +94,14 @@ export default function FeaturesSection() {
                   width="50"
                   alt="icon"
                 />
-                <Text mt={3} fontSize={"22px"} fontWeight={"semiBold"}>
+                <Text
+                  mt={3}
+                  fontSize={{ base: "16px", md: "18px" }}
+                  fontWeight={"semiBold"}
+                >
                   Full Ownership
                 </Text>
-                <Text mt={5} fontSize={"18px"}>
+                <Text mt={5} fontSize={{ base: "16px", md: "18px" }}>
                   Take ownership of your membership with our NFT-based system,
                   which gives you complete control over your access and
                   benefits.
@@ -102,10 +114,14 @@ export default function FeaturesSection() {
                   width="50"
                   alt="icon"
                 />
-                <Text mt={3} fontSize={"22px"} fontWeight={"semiBold"}>
+                <Text
+                  mt={3}
+                  fontSize={{ base: "18px", md: "22px" }}
+                  fontWeight={"semiBold"}
+                >
                   User Safety
                 </Text>
-                <Text mt={5} fontSize={"18px"}>
+                <Text mt={5} fontSize={{ base: "16px", md: "18px" }}>
                   Enjoy a secure and fraud-proof membership experience with our
                   NFT-based system that ensures user safety and authenticity.
                 </Text>
