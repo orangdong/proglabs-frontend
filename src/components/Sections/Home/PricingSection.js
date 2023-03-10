@@ -13,6 +13,48 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import { FiX, FiCheck } from "react-icons/fi";
+const tableContent = [
+  {
+    perks: "Free course access",
+    regular: true,
+    membership: true,
+  },
+  {
+    perks: "Premium course access",
+    regular: false,
+    membership: true,
+  },
+  {
+    perks: "Exclusive learning community",
+    regular: false,
+    membership: true,
+  },
+  {
+    perks: "Early access to all upcoming courses",
+    regular: false,
+    membership: true,
+  },
+  {
+    perks: "Course certificate",
+    regular: false,
+    membership: true,
+  },
+  {
+    perks: "1 on 1 expert session",
+    regular: false,
+    membership: true,
+  },
+  {
+    perks: "Priority customer support",
+    regular: false,
+    membership: true,
+  },
+  {
+    perks: "Cook you a nice seafood dinner",
+    regular: false,
+    membership: false,
+  },
+];
 
 export default function PricingSection() {
   return (
@@ -56,7 +98,11 @@ export default function PricingSection() {
           >
             Pick the plan that works best for you
           </Text>
-          <TableContainer w={"full"} maxW={"1064px"}>
+          <TableContainer
+            w={"full"}
+            overflowX={{ base: "hidden", md: "auto" }}
+            maxW={{ base: "100vw", md: "1064px" }}
+          >
             <Table variant="simple">
               <Thead>
                 <Tr>
@@ -64,11 +110,12 @@ export default function PricingSection() {
                     color={"#293F48"}
                     textTransform={"none"}
                     fontWeight="bold"
-                    fontSize={"22px"}
+                    fontSize={{ base: "18px", md: "22px" }}
                     borderColor={"#c4c4c4"}
                     letterSpacing={"normal"}
-                    py={"24px"}
-                    minW={"430px"}
+                    py={{ base: "16px", md: "24px" }}
+                    minW={{ base: "none", md: "430px" }}
+                    maxW={"30vw"}
                   >
                     Perks
                   </Th>
@@ -76,11 +123,14 @@ export default function PricingSection() {
                     color={"#293F48"}
                     textTransform={"none"}
                     fontWeight="bold"
-                    fontSize={"22px"}
+                    fontSize={{ base: "18px", md: "22px" }}
                     borderColor={"#c4c4c4"}
                     letterSpacing={"normal"}
-                    py={"24px"}
+                    py={{ base: "16px", md: "24px" }}
                     textAlign={"center"}
+                    whiteSpace={"normal"}
+                    overflow={"hidden"}
+                    maxW={"30vw"}
                   >
                     Regular
                   </Th>
@@ -88,241 +138,80 @@ export default function PricingSection() {
                     color={"#293F48"}
                     textTransform={"none"}
                     fontWeight="bold"
-                    fontSize={"22px"}
+                    fontSize={{ base: "18px", md: "22px" }}
                     letterSpacing={"normal"}
                     borderColor={"#c4c4c4"}
-                    py={"24px"}
+                    py={{ base: "16px", md: "24px" }}
                     textAlign={"center"}
+                    whiteSpace={"normal"}
+                    overflow={"hidden"}
+                    maxW={"30vw"}
                   >
                     NFT Membership
                   </Th>
                 </Tr>
               </Thead>
               <Tbody>
-                <Tr>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                  >
-                    Free course access
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon color={"#293F48"} as={FiCheck} boxSize={"40px"} />
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon color={"#293F48"} as={FiCheck} boxSize={"40px"} />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                  >
-                    Premium course access
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon as={FiX} color={"#C4C4C4"} boxSize={"40px"} />
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon color={"#293F48"} as={FiCheck} boxSize={"40px"} />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                  >
-                    Exclusive learning community
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon as={FiX} color={"#C4C4C4"} boxSize={"40px"} />
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon color={"#293F48"} as={FiCheck} boxSize={"40px"} />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                  >
-                    Early access to all upcoming courses
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon as={FiX} color={"#C4C4C4"} boxSize={"40px"} />
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon color={"#293F48"} as={FiCheck} boxSize={"40px"} />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                  >
-                    Course certificate
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon as={FiX} color={"#C4C4C4"} boxSize={"40px"} />
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon color={"#293F48"} as={FiCheck} boxSize={"40px"} />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                  >
-                    1 on 1 expert session
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon as={FiX} color={"#C4C4C4"} boxSize={"40px"} />
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon color={"#293F48"} as={FiCheck} boxSize={"40px"} />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                  >
-                    Priority customer support
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon as={FiX} color={"#C4C4C4"} boxSize={"40px"} />
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon color={"#293F48"} as={FiCheck} boxSize={"40px"} />
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                  >
-                    Cook you a nice seafood dinner
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon as={FiX} color={"#C4C4C4"} boxSize={"40px"} />
-                  </Td>
-                  <Td
-                    borderColor={"#c4c4c4"}
-                    py="24px"
-                    fontSize={"18px"}
-                    color={"textGray"}
-                    textAlign={"center"}
-                  >
-                    <Icon as={FiX} color={"#C4C4C4"} boxSize={"40px"} />
-                  </Td>
-                </Tr>
+                {tableContent.map((tc, i) => (
+                  <Tr key={i}>
+                    <Td
+                      borderColor={"#c4c4c4"}
+                      py={{ base: "16px", md: "24px" }}
+                      fontSize={{ base: "16px", md: "18px" }}
+                      color={"textGray"}
+                      whiteSpace={"normal"}
+                      overflow={"hidden"}
+                    >
+                      {tc.perks}
+                    </Td>
+                    <Td
+                      borderColor={"#c4c4c4"}
+                      py="24px"
+                      fontSize={{ base: "16px", md: "18px" }}
+                      color={"textGray"}
+                      textAlign={"center"}
+                      whiteSpace={"normal"}
+                      overflow={"hidden"}
+                    >
+                      {tc.regular ? (
+                        <Icon
+                          color={"#293F48"}
+                          as={FiCheck}
+                          boxSize={{ base: "30px", md: "40px" }}
+                        />
+                      ) : (
+                        <Icon
+                          as={FiX}
+                          color={"#C4C4C4"}
+                          boxSize={{ base: "30px", md: "40px" }}
+                        />
+                      )}
+                    </Td>
+                    <Td
+                      borderColor={"#c4c4c4"}
+                      py="24px"
+                      fontSize={{ base: "16px", md: "18px" }}
+                      color={"textGray"}
+                      textAlign={"center"}
+                      whiteSpace={"normal"}
+                      overflow={"hidden"}
+                    >
+                      {tc.membership ? (
+                        <Icon
+                          color={"#293F48"}
+                          as={FiCheck}
+                          boxSize={{ base: "30px", md: "40px" }}
+                        />
+                      ) : (
+                        <Icon
+                          as={FiX}
+                          color={"#C4C4C4"}
+                          boxSize={{ base: "30px", md: "40px" }}
+                        />
+                      )}
+                    </Td>
+                  </Tr>
+                ))}
               </Tbody>
             </Table>
           </TableContainer>
