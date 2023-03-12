@@ -1,3 +1,5 @@
+import GeneralLayout from "@/components/GeneralLayout";
+
 export default function Launchpad() {
-  return <div>Launchpad</div>;
+  return <GeneralLayout title={"Launchpad"}></GeneralLayout>;
 }
