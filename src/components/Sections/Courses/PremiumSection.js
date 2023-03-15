@@ -4,7 +4,12 @@ import Image from "next/image";
 
 export default function PremiumSection() {
   return (
-    <Flex w={"full"} overflowX={"auto"} mb={"60px"}>
+    <Flex
+      w={"full"}
+      overflowX={"auto"}
+      mb={"60px"}
+      flexWrap={{ base: "nowrap", md: "wrap" }}
+    >
       <CourseCard minW={"365px"} mr={"40px"}>
         <Image
           src="/assets/course-thumbnail.png"

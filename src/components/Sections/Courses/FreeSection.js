@@ -4,7 +4,11 @@ import Image from "next/image";
 
 export default function FreeSection() {
   return (
-    <Flex w={"full"} overflowX={"auto"}>
+    <Flex
+      w={"full"}
+      overflowX={"auto"}
+      flexWrap={{ base: "nowrap", md: "wrap" }}
+    >
       <CourseCard minW={"365px"} mr={"40px"}>
         <Image
           src="/assets/course-thumbnail.png"
