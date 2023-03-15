@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function WhyWeBuild() {
   return (
-    <Flex w={"full"} flexDir={"column"}>
+    <Flex w={"full"} flexDir={"column"} mb={"60px"}>
       <Text
         fontWeight={"bold"}
         fontSize={{ base: "28px", md: "36px" }}

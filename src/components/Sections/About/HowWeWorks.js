@@ -8,6 +8,7 @@ export default function HowWeWorks() {
         fontWeight={"bold"}
         fontSize={{ base: "28px", md: "36px" }}
         mb={"40px"}
+        textAlign={{ base: "initial", md: "end" }}
       >
         How we works?
       </Text>
