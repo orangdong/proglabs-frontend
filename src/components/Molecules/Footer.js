@@ -86,7 +86,12 @@ export default function Footer({ isHome = false }) {
         color={"textWhite"}
       >
         <Flex flexWrap={"wrap"} mb={"120px"} mt={isHome ? "220px" : "92px"}>
-          <Box mr={{ base: 0, md: "160px" }}>
+          <Box
+            as={Link}
+            _hover={{ textDecoration: "none" }}
+            href="/"
+            mr={{ base: 0, md: "160px" }}
+          >
             <Image
               src="/assets/logo-white.svg"
               width={197}
