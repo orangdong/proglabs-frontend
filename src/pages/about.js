@@ -2,10 +2,11 @@ import GeneralLayout from "@/components/GeneralLayout";
 import HowWeWorks from "@/components/Sections/About/HowWeWorks";
 import WhyWeBuild from "@/components/Sections/About/WhyWeBuild";
 import { Flex, Box, Text } from "@chakra-ui/react";
+import { fetchData } from "@/lib/fetchData";
 
-export default function About() {
+export default function About({ courses }) {
   return (
-    <GeneralLayout title={"About"}>
+    <GeneralLayout title={"About"} courses={courses}>
       <Box>
         <Flex
           justifyContent={"space-between"}
@@ -46,3 +47,11 @@ export default function About() {
     </GeneralLayout>
   );
 }
+
+export const getServerSideProps = async () => {
+  const data = await fetchData("/v1/courses");
+
+  return {
+    props: { courses: data },
+  };
+};
