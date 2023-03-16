@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Box,
   Flex,
@@ -12,25 +13,20 @@ import {
   InputLeftElement,
   Input,
   useColorModeValue,
-  useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import { FiArrowRight, FiSearch, FiMoon, FiSun } from "react-icons/fi";
 import Navlink from "../Atoms/Navlink";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import NextLink from "next/link";
 
-export default function Navbar() {
+export default function Navbar({ course = [] }) {
   const { isOpen, onToggle } = useDisclosure();
   const [isDark, setIsDark] = useState(false);
   const [toggleSearch, setToggleSearch] = useState(false);
+  const [search, setSearch] = useState("");
 
   const toggleDarkMode = () => {
     // const colorMode = localStorage.getItem("chakra-ui-color-mode");
@@ -51,6 +47,16 @@ export default function Navbar() {
   //     localStorage.getItem("chakra-ui-color-mode") === "dark" ? true : false
   //   );
   // }, []);
+
+  // searching
+  const filteredItem = useMemo(() => {
+    if (course && course.length > 0) {
+      return course.filter((c) =>
+        c.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    return [];
+  }, [search, course]);
   return (
     <>
       <Box bg={"#091F2A"} h={"40px"} position={"sticky"} top={0} zIndex={10}>
@@ -160,6 +166,7 @@ export default function Navbar() {
                   placeholder="Search course"
                   onFocus={() => setToggleSearch(true)}
                   onBlur={() => setToggleSearch(false)}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
               </InputGroup>
               <DesktopNav />
@@ -175,6 +182,7 @@ export default function Navbar() {
                 display={{ base: "none", md: toggleSearch ? "block" : "none" }}
                 px={4}
                 py={4}
+                overflowY={"auto"}
                 onMouseDown={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -184,7 +192,7 @@ export default function Navbar() {
                   What course do you like?
                 </Text>
                 <Flex
-                  mt={3}
+                  mt={5}
                   flexDir={"column"}
                   justifyContent="center"
                   alignItems="center"
@@ -193,15 +201,49 @@ export default function Navbar() {
                   minH={"200px"}
                   overflowY={"auto"}
                 >
-                  <Text
-                    fontWeight="semiBold"
-                    textAlign="center"
-                    my="auto"
-                    fontSize="18px"
-                  >
-                    No Item found
-                    <Link href="/about">About</Link>
-                  </Text>
+                  {filteredItem.length < 1 ? (
+                    <Text
+                      fontWeight="semiBold"
+                      textAlign="center"
+                      my="auto"
+                      fontSize="18px"
+                    >
+                      No Item Found
+                    </Text>
+                  ) : (
+                    filteredItem.map((c, i) => (
+                      <Flex
+                        w={"full"}
+                        mb={5}
+                        p={3}
+                        _hover={{
+                          background: "#E4E4E4",
+                        }}
+                        borderRadius={"8px"}
+                        as={"a"}
+                        href={"#"}
+                        key={i}
+                      >
+                        <img
+                          src={c.thumbnail}
+                          alt="thumbnail"
+                          height="50"
+                          width="100"
+                          style={{ borderRadius: "4px" }}
+                        />
+                        <Box ml={3}>
+                          <Text
+                            mb={1}
+                            fontWeight={"semiBold"}
+                            fontSize={"18px"}
+                          >
+                            {c.title}
+                          </Text>
+                          <Text>{c.isPremium ? "Premium" : "Free"}</Text>
+                        </Box>
+                      </Flex>
+                    ))
+                  )}
                 </Flex>
               </Box>
             </Flex>

@@ -2,7 +2,12 @@ import Navbar from "./Molecules/Navbar";
 import Footer from "./Molecules/Footer";
 import Head from "next/head";
 
-export default function GeneralLayout({ title, isHome = false, children }) {
+export default function GeneralLayout({
+  title,
+  isHome = false,
+  children,
+  courses,
+}) {
   return (
     <>
       <Head>
@@ -12,7 +17,7 @@ export default function GeneralLayout({ title, isHome = false, children }) {
         <link rel="icon" href="/favicon.png" />
       </Head>
       <main>
-        <Navbar />
+        <Navbar course={courses} />
         {children}
         <Footer isHome={isHome} />
       </main>
