@@ -11,7 +11,7 @@ export default function Home({ courses }) {
     <GeneralLayout isHome={true} title={"Home"} courses={courses}>
       <HeroSection />
       <LogoSection />
-      <CourseSection />
+      <CourseSection courses={courses} />
       <FeaturesSection />
       <PricingSection />
     </GeneralLayout>
