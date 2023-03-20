@@ -35,7 +35,7 @@ export default function CourseSection({ courses }) {
             {courses.slice(0, 3).map((c, i) => (
               <CourseCard key={i}>
                 <Image
-                  src="/assets/course-thumbnail.png"
+                  src={c.thumbnail}
                   height="205"
                   width="365"
                   alt="thumbnail"

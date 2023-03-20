@@ -47,7 +47,7 @@ export default function Courses({ courses }) {
               >
                 Premium Course
               </Text>
-              <PremiumSection />
+              <PremiumSection courses={courses.filter((c) => c.isPremium)} />
             </Flex>
             <Flex w={"full"} flexDir={"column"}>
               <Text
@@ -57,7 +57,7 @@ export default function Courses({ courses }) {
               >
                 Free Course
               </Text>
-              <FreeSection />
+              <FreeSection courses={courses.filter((c) => !c.isPremium)} />
             </Flex>
           </Flex>
         </Flex>
