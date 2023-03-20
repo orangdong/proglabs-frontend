@@ -5,6 +5,7 @@ const nextConfig = {
     remotePatterns: [
       protocol: 'https',
       hostname: 'storage.googleapis.com',
+      port: '',
       pathname: '/proglabs-bucket/course-thumbnail/**',
     ],
   },
