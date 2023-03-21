@@ -38,7 +38,7 @@ export default function Launchpad({ courses }) {
             >
               Get your NFT membership and start learning
             </Text>
-            <Flex justifyContent={"space-between"} alignItems={"center"}>
+            <Flex justifyContent={"space-between"} alignItems={"center"} w={'full'} flexWrap={'wrap'}>
               <Image
                 src="/assets/launchpad.png"
                 width="500"
@@ -108,11 +108,16 @@ export default function Launchpad({ courses }) {
                   <Box
                     h={"12px"}
                     w={"full"}
-                    borderRadius={"100%"}
+                    borderRadius={"100px"}
                     bg={"#C4C4C4"}
                     mb={2}
                   >
-                    <Box h={"12px"} w={"50%"} bg={"#ECFEFF"} />
+                    <Box
+                      h={"12px"}
+                      borderRadius={"100px"}
+                      w={"50%"}
+                      bg={"#ECFEFF"}
+                    />
                   </Box>
                   <Button
                     borderRadius={"12px"}
@@ -121,10 +126,16 @@ export default function Launchpad({ courses }) {
                     color={"#091F2A"}
                     bg={"#ECFEFF"}
                     mb={3}
+                    w={"full"}
+                    py={4}
                   >
                     Mint
                   </Button>
-                  <Text fontSize={"16px"} color={"#C4C4C4"}>
+                  <Text
+                    fontSize={"16px"}
+                    color={"#C4C4C4"}
+                    textAlign={"center"}
+                  >
                     Limit 1 per wallet
                   </Text>
                 </Box>
