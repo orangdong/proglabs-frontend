@@ -27,7 +27,7 @@ const theme = extendTheme({
     backgroundTealHover: "#0A566A",
     textWhite: "#ECFEFF",
     textGray: "#656F78",
-    backgroudDark: "#091F2A",
+    backgroundDark: "#091F2A",
   },
 });
 

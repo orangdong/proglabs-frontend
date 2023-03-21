@@ -4,7 +4,7 @@ import NextLink from "next/link";
 
 export default function Footer({ isHome = false }) {
   return (
-    <Box bg={"backgroudDark"} position={"relative"} mt={isHome ? "370px" : 0}>
+    <Box bg={"backgroundDark"} position={"relative"} mt={isHome ? "370px" : 0}>
       {isHome ? (
         <Flex
           flexDir={"column"}

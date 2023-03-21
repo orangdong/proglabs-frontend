@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function FeaturesSection() {
   return (
-    <Box bg={"backgroudDark"} mt={"72px"}>
+    <Box bg={"backgroundDark"} mt={"72px"}>
       <Flex
         justifyContent={"space-between"}
         alignItems={"center"}

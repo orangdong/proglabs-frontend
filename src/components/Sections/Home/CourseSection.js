@@ -49,7 +49,7 @@ export default function CourseSection({ courses }) {
                   px={3}
                   borderRadius={"4px"}
                   fontSize={"14px"}
-                  bg={"backgroudDark"}
+                  bg={"backgroundDark"}
                   w={"fit-content"}
                   color={"textWhite"}
                   fontWeight={"semiBold"}
