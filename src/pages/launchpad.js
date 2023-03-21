@@ -1,5 +1,5 @@
 import GeneralLayout from "@/components/GeneralLayout";
-import { Box, Flex, Text, Link } from "@chakra-ui/react";
+import { Box, Flex, Text, Link, Button } from "@chakra-ui/react";
 import { fetchData } from "@/lib/fetchData";
 import Image from "next/image";
 
@@ -52,7 +52,7 @@ export default function Launchpad({ courses }) {
                 bg={"backgroundDark"}
                 maxW={"500px"}
                 minH={"500px"}
-                flexDir={"coloumn"}
+                flexDir={"column"}
                 justifyContent={"space-between"}
               >
                 <Box>
@@ -105,6 +105,28 @@ export default function Launchpad({ courses }) {
                       447/1000
                     </Text>
                   </Flex>
+                  <Box
+                    h={"12px"}
+                    w={"full"}
+                    borderRadius={"100%"}
+                    bg={"#C4C4C4"}
+                    mb={2}
+                  >
+                    <Box h={"12px"} w={"50%"} bg={"#ECFEFF"} />
+                  </Box>
+                  <Button
+                    borderRadius={"12px"}
+                    fontWeight={"bold"}
+                    fontSize={"22px"}
+                    color={"#091F2A"}
+                    bg={"#ECFEFF"}
+                    mb={3}
+                  >
+                    Mint
+                  </Button>
+                  <Text fontSize={"16px"} color={"#C4C4C4"}>
+                    Limit 1 per wallet
+                  </Text>
                 </Box>
               </Flex>
             </Flex>
