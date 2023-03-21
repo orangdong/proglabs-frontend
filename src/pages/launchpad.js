@@ -1,5 +1,5 @@
 import GeneralLayout from "@/components/GeneralLayout";
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, Link } from "@chakra-ui/react";
 import { fetchData } from "@/lib/fetchData";
 import Image from "next/image";
 
@@ -53,7 +53,28 @@ export default function Launchpad({ courses }) {
                 maxW={"500px"}
                 maxH={"500px"}
               >
-                <Text>Progpass</Text>
+                <Text
+                  fontWeight={"bold"}
+                  fontSize={"36px"}
+                  color={"textWhite"}
+                  mb={3}
+                >
+                  Progpass
+                </Text>
+                <Text fontSize={"16px"} color={"#C4C4C4"} mb={2}>
+                  Progpass is a limited edition NFT collection that gives you
+                  access to all the courses and benefits available at Proglabs.
+                </Text>
+                <Text fontSize={"16px"} color={"#C4C4C4"}>
+                  The NFT are available on the Devnet. Get your SOL at{" "}
+                  <Link
+                    textDecoration={"underline"}
+                    src="https://solfaucet.com"
+                    _hover={{ color: "textWhite" }}
+                  >
+                    solfaucet.com
+                  </Link>
+                </Text>
               </Box>
             </Flex>
           </Flex>
