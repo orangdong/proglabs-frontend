@@ -46,36 +46,67 @@ export default function Launchpad({ courses }) {
                 alt="launchpad"
                 style={{ borderRadius: "24px" }}
               />
-              <Box
+              <Flex
                 borderRadius={"24px"}
                 p={6}
                 bg={"backgroundDark"}
                 maxW={"500px"}
-                maxH={"500px"}
+                minH={"500px"}
+                flexDir={"coloumn"}
+                justifyContent={"space-between"}
               >
-                <Text
-                  fontWeight={"bold"}
-                  fontSize={"36px"}
-                  color={"textWhite"}
-                  mb={3}
-                >
-                  Progpass
-                </Text>
-                <Text fontSize={"16px"} color={"#C4C4C4"} mb={2}>
-                  Progpass is a limited edition NFT collection that gives you
-                  access to all the courses and benefits available at Proglabs.
-                </Text>
-                <Text fontSize={"16px"} color={"#C4C4C4"}>
-                  The NFT are available on the Devnet. Get your SOL at{" "}
-                  <Link
-                    textDecoration={"underline"}
-                    src="https://solfaucet.com"
-                    _hover={{ color: "textWhite" }}
+                <Box>
+                  <Text
+                    fontWeight={"bold"}
+                    fontSize={"36px"}
+                    color={"textWhite"}
+                    mb={3}
                   >
-                    solfaucet.com
-                  </Link>
-                </Text>
-              </Box>
+                    Progpass
+                  </Text>
+                  <Text fontSize={"18px"} color={"#C4C4C4"} mb={2}>
+                    Progpass is a limited edition NFT collection that gives you
+                    access to all the courses and benefits available at
+                    Proglabs.
+                  </Text>
+                  <Text fontSize={"18px"} color={"#C4C4C4"}>
+                    The NFT are available on the Devnet. Get your SOL at{" "}
+                    <Link
+                      textDecoration={"underline"}
+                      href="https://solfaucet.com"
+                      _hover={{ color: "textWhite" }}
+                    >
+                      solfaucet.com
+                    </Link>
+                  </Text>
+                </Box>
+                <Box>
+                  <Flex w={"full"} justifyContent={"space-between"} mb={1}>
+                    <Text
+                      fontWeight={"bold"}
+                      color={"textWhite"}
+                      fontSize={"22px"}
+                    >
+                      Public
+                    </Text>
+                    <Text
+                      fontWeight={"bold"}
+                      color={"textWhite"}
+                      fontSize={"22px"}
+                    >
+                      1 SOL
+                    </Text>
+                  </Flex>
+                  <Flex w={"full"} justifyContent={"space-between"} mb={4}>
+                    <Text fontSize={"18px"} color={"#C4C4C4"}>
+                      Live
+                    </Text>
+                    <Text fontSize={"18px"} color={"#C4C4C4"}>
+                      447/1000
+                    </Text>
+                  </Flex>
+                </Box>
+              </Flex>
             </Flex>
           </Flex>
         </Flex>
