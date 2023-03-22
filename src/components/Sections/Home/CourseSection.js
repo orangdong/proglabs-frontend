@@ -33,7 +33,7 @@ export default function CourseSection({ courses }) {
           </Text>
           <Flex w={"full"} justifyContent={"space-between"} flexWrap="wrap">
             {courses.slice(0, 3).map((c, i) => (
-              <CourseCard key={i}>
+              <CourseCard href={`courses/${c.id}`} key={i}>
                 <Image
                   src={c.thumbnail}
                   height="205"

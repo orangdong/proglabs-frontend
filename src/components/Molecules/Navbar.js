@@ -224,8 +224,8 @@ export default function Navbar({ course = [] }) {
                           background: "#E4E4E4",
                         }}
                         borderRadius={"8px"}
-                        as={"a"}
-                        href={"#"}
+                        as={NextLink}
+                        href={`/courses/${c.id}`}
                         key={i}
                       >
                         <img

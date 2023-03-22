@@ -11,7 +11,12 @@ export default function PremiumSection({ courses = [] }) {
       flexWrap={{ base: "nowrap", md: "wrap" }}
     >
       {courses.map((c, i) => (
-        <CourseCard minW={"365px"} mr={"40px"} key={i}>
+        <CourseCard
+          href={`/courses/${c.id}`}
+          minW={"365px"}
+          mr={"40px"}
+          key={i}
+        >
           <Image
             src={c.thumbnail}
             height="205"
