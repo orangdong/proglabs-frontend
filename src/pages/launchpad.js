@@ -38,7 +38,11 @@ export default function Launchpad({ courses }) {
             >
               Get your NFT membership and start learning
             </Text>
-            <Flex justifyContent={"space-between"} alignItems={"center"} w={'full'} flexWrap={'wrap'}>
+            <Flex
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              flexWrap={"wrap"}
+            >
               <Image
                 src="/assets/launchpad.png"
                 width="500"
@@ -54,22 +58,31 @@ export default function Launchpad({ courses }) {
                 minH={"500px"}
                 flexDir={"column"}
                 justifyContent={"space-between"}
+                ml={{ base: 0, md: "80px" }}
+                mt={{ base: "32px", md: 0 }}
               >
                 <Box>
                   <Text
                     fontWeight={"bold"}
-                    fontSize={"36px"}
+                    fontSize={{ base: "28px", md: "36px" }}
                     color={"textWhite"}
                     mb={3}
                   >
                     Progpass
                   </Text>
-                  <Text fontSize={"18px"} color={"#C4C4C4"} mb={2}>
+                  <Text
+                    fontSize={{ base: "16px", md: "18px" }}
+                    color={"#C4C4C4"}
+                    mb={2}
+                  >
                     Progpass is a limited edition NFT collection that gives you
                     access to all the courses and benefits available at
                     Proglabs.
                   </Text>
-                  <Text fontSize={"18px"} color={"#C4C4C4"}>
+                  <Text
+                    fontSize={{ base: "16px", md: "18px" }}
+                    color={"#C4C4C4"}
+                  >
                     The NFT are available on the Devnet. Get your SOL at{" "}
                     <Link
                       textDecoration={"underline"}
@@ -85,23 +98,29 @@ export default function Launchpad({ courses }) {
                     <Text
                       fontWeight={"bold"}
                       color={"textWhite"}
-                      fontSize={"22px"}
+                      fontSize={{ base: "18px", md: "22px" }}
                     >
                       Public
                     </Text>
                     <Text
                       fontWeight={"bold"}
                       color={"textWhite"}
-                      fontSize={"22px"}
+                      fontSize={{ base: "18px", md: "22px" }}
                     >
                       1 SOL
                     </Text>
                   </Flex>
                   <Flex w={"full"} justifyContent={"space-between"} mb={4}>
-                    <Text fontSize={"18px"} color={"#C4C4C4"}>
+                    <Text
+                      fontSize={{ base: "16px", md: "18px" }}
+                      color={"#C4C4C4"}
+                    >
                       Live
                     </Text>
-                    <Text fontSize={"18px"} color={"#C4C4C4"}>
+                    <Text
+                      fontSize={{ base: "16px", md: "18px" }}
+                      color={"#C4C4C4"}
+                    >
                       447/1000
                     </Text>
                   </Flex>
@@ -122,7 +141,7 @@ export default function Launchpad({ courses }) {
                   <Button
                     borderRadius={"12px"}
                     fontWeight={"bold"}
-                    fontSize={"22px"}
+                    fontSize={{ base: "18px", md: "22px" }}
                     color={"#091F2A"}
                     bg={"#ECFEFF"}
                     mb={3}
