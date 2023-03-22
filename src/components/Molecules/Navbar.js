@@ -165,7 +165,11 @@ export default function Navbar({ course = [] }) {
                   color={"#656F78"}
                   placeholder="Search course"
                   onFocus={() => setToggleSearch(true)}
-                  onBlur={() => setToggleSearch(false)}
+                  value={search}
+                  onBlur={() => {
+                    setToggleSearch(false);
+                    setSearch("");
+                  }}
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </InputGroup>
@@ -312,6 +316,7 @@ const MobileNav = () => {
       p={4}
       display={{ md: "none" }}
     >
+      <MobileNavItem label={"Home"} href="/" />
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}
