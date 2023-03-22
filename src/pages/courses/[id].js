@@ -1,9 +1,39 @@
 import GeneralLayout from "@/components/GeneralLayout";
 import { fetchData } from "@/lib/fetchData";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 export default function CourseDetail({ courseData }) {
   return (
-    <GeneralLayout title={"Course Detail"}>{courseData.title}</GeneralLayout>
+    <GeneralLayout title={"Course Detail"}>
+      <Box>
+        <Flex
+          justifyContent={"space-between"}
+          alignItems={"center"}
+          h={"full"}
+          maxW={"1280px"}
+          w={"full"}
+          mx={"auto"}
+          px={4}
+        >
+          <Flex
+            my={{ base: "60px", md: "92px" }}
+            flexDir={"column"}
+            alignItems={"center"}
+            w={"full"}
+          >
+            <Text
+              textAlign={"center"}
+              fontWeight={"bold"}
+              fontSize={{ base: 36, md: 48 }}
+              mb={"60px"}
+              maxW={"lg"}
+            >
+              {courseData.title}
+            </Text>
+          </Flex>
+        </Flex>
+      </Box>
+    </GeneralLayout>
   );
 }
 

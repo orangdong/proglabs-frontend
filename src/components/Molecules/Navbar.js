@@ -380,14 +380,14 @@ const MobileNavItem = ({ label, children, href }) => {
 const NAV_ITEMS = [
   {
     label: "Launchpad",
-    href: "launchpad",
+    href: "/launchpad",
   },
   {
     label: "Courses",
-    href: "courses",
+    href: "/courses",
   },
   {
     label: "About",
-    href: "about",
+    href: "/about",
   },
 ];
