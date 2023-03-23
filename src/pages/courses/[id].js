@@ -1,10 +1,13 @@
 import GeneralLayout from "@/components/GeneralLayout";
+import CourseDesc from "@/components/Sections/CourseDetail/CourseDesc";
+import CourseModule from "@/components/Sections/CourseDetail/CourseModule";
+import CourseStats from "@/components/Sections/CourseDetail/CourseStats";
 import { fetchData } from "@/lib/fetchData";
 import { Box, Flex, Text } from "@chakra-ui/react";
 
-export default function CourseDetail({ courseData }) {
+export default function CourseDetail({ courseData, courses }) {
   return (
-    <GeneralLayout title={"Course Detail"}>
+    <GeneralLayout title={"Course Detail"} courses={courses}>
       <Box>
         <Flex
           justifyContent={"space-between"}
@@ -25,11 +28,18 @@ export default function CourseDetail({ courseData }) {
               textAlign={"center"}
               fontWeight={"bold"}
               fontSize={{ base: 36, md: 48 }}
-              mb={"60px"}
+              mb={"40px"}
               maxW={"lg"}
             >
               {courseData.title}
             </Text>
+            <CourseStats
+              member={courseData._count.userCourses}
+              type={courseData.isPremium ? "Premium" : "Free"}
+              certificate={courseData.isPremium ? true : false}
+            />
+            <CourseModule />
+            <CourseDesc />
           </Flex>
         </Flex>
       </Box>
@@ -40,10 +50,12 @@ export default function CourseDetail({ courseData }) {
 export const getStaticProps = async (ctx) => {
   const { id } = ctx.params;
 
-  const data = await fetchData(`/v1/courses/${id}`);
+  const data = await fetchData(`/v1/courses`);
+  const courseData = await fetchData(`/v1/courses/${id}`);
   return {
     props: {
-      courseData: data,
+      courseData,
+      courses: data,
     },
     revalidate: 30,
   };
