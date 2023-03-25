@@ -146,7 +146,7 @@ export default function Launchpad({ courses }) {
                     bg={"#ECFEFF"}
                     mb={3}
                     w={"full"}
-                    py={4}
+                    py={"24px"}
                   >
                     Mint
                   </Button>
