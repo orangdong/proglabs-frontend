@@ -16,7 +16,7 @@ export default function CourseModule({ image, module }) {
       <Flex
         flexDir={"column"}
         bg={"white"}
-        px={"24px"}
+        px={{ base: "16px", md: "24px" }}
         py={4}
         borderRadius={"24px"}
         maxW={{ base: "none", md: "lg" }}
