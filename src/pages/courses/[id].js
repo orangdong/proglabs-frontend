@@ -38,8 +38,14 @@ export default function CourseDetail({ courseData, courses }) {
               type={courseData.isPremium ? "Premium" : "Free"}
               certificate={courseData.isPremium ? true : false}
             />
-            <CourseModule />
-            <CourseDesc />
+            <CourseModule
+              image={courseData.thumbnail}
+              module={courseData.courseModules}
+            />
+            <CourseDesc
+              desc={courseData.description}
+              tech={courseData.courseTechnologies}
+            />
           </Flex>
         </Flex>
       </Box>

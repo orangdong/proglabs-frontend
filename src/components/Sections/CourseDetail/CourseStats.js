@@ -3,18 +3,27 @@ import { FiX, FiCheck } from "react-icons/fi";
 
 export default function CourseStats({ member, type, certificate }) {
   return (
-    <Flex minW={"2xl"} justifyContent={"space-between"} mb={"120px"}>
+    <Flex
+      maxW={"2xl"}
+      w={"full"}
+      justifyContent={"space-between"}
+      mb={{ base: "80px", md: "120px" }}
+    >
       <Box>
         <Text
           color={"textDark"}
           fontWeight={"semiBold"}
-          fontSize={"22px"}
+          fontSize={{ base: "18px", md: "22px" }}
           mb={4}
           textAlign={"center"}
         >
           Member
         </Text>
-        <Text fontSize={"22px"} color={"textGray"} textAlign={"center"}>
+        <Text
+          fontSize={{ base: "18px", md: "22px" }}
+          color={"textGray"}
+          textAlign={"center"}
+        >
           {member} Students
         </Text>
       </Box>
@@ -22,13 +31,17 @@ export default function CourseStats({ member, type, certificate }) {
         <Text
           color={"textDark"}
           fontWeight={"semiBold"}
-          fontSize={"22px"}
+          fontSize={{ base: "18px", md: "22px" }}
           mb={4}
           textAlign={"center"}
         >
           Class Type
         </Text>
-        <Text fontSize={"22px"} color={"textGray"} textAlign={"center"}>
+        <Text
+          fontSize={{ base: "18px", md: "22px" }}
+          color={"textGray"}
+          textAlign={"center"}
+        >
           {type}
         </Text>
       </Box>
@@ -36,7 +49,7 @@ export default function CourseStats({ member, type, certificate }) {
         <Text
           color={"textDark"}
           fontWeight={"semiBold"}
-          fontSize={"22px"}
+          fontSize={{ base: "18px", md: "22px" }}
           mb={4}
           textAlign={"center"}
         >
