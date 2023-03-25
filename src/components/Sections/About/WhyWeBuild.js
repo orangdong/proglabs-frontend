@@ -6,7 +6,7 @@ export default function WhyWeBuild() {
     <Flex w={"full"} flexDir={"column"} mb={"60px"}>
       <Text
         fontWeight={"bold"}
-        fontSize={{ base: "28px", md: "36px" }}
+        fontSize={{ base: "28px", md: "32px" }}
         mb={"40px"}
       >
         Why we build this?

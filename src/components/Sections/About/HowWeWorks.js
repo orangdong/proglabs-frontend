@@ -6,7 +6,7 @@ export default function HowWeWorks() {
     <Flex w={"full"} flexDir={"column"}>
       <Text
         fontWeight={"bold"}
-        fontSize={{ base: "28px", md: "36px" }}
+        fontSize={{ base: "28px", md: "32px" }}
         mb={"40px"}
         textAlign={{ base: "initial", md: "end" }}
       >
