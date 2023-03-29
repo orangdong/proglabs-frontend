@@ -14,19 +14,32 @@ import {
   Input,
   useColorModeValue,
   useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Image from "next/image";
-import { FiArrowRight, FiSearch, FiMoon, FiSun } from "react-icons/fi";
+import { FiArrowRight, FiSearch, FiMoon, FiSun, FiUser } from "react-icons/fi";
 import Navlink from "../Atoms/Navlink";
 import { useState, useEffect, useMemo } from "react";
 import NextLink from "next/link";
+import WalletModal from "../Atoms/WalletModal";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 export default function Navbar({ course = [] }) {
   const { isOpen, onToggle } = useDisclosure();
+  const {
+    isOpen: isWalletOpen,
+    onOpen: onWalletOpen,
+    onClose: onWalletClose,
+  } = useDisclosure();
+  const { publicKey, disconnect, connected } = useWallet();
   const [isDark, setIsDark] = useState(false);
   const [toggleSearch, setToggleSearch] = useState(false);
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState();
 
   const toggleDarkMode = () => {
     // const colorMode = localStorage.getItem("chakra-ui-color-mode");
@@ -270,20 +283,89 @@ export default function Navbar({ course = [] }) {
               onClick={toggleDarkMode}
               borderRadius={"10px"}
             />
-            <Button
-              fontWeight={"semibold"}
-              color={"white"}
-              bg={"backgroundTeal"}
-              borderRadius={"10px"}
-              px={3}
-              py={2}
-              _hover={{
-                bg: "backgroundTealHover",
-              }}
-              fontSize="18px"
-            >
-              Connect Wallet
-            </Button>
+            {connected ? (
+              <>
+                <Box>
+                  <Menu>
+                    <MenuButton
+                      _hover={{ bg: "#E3E8F4" }}
+                      bg={"white"}
+                      px={2}
+                      borderRadius={"10px"}
+                      display={{ base: "none", md: "flex" }}
+                      justifyContent={"center"}
+                    >
+                      <Icon boxSize={6} mt={1} as={FiUser} />
+                    </MenuButton>
+                    <MenuList mt={5}>
+                      <MenuItem
+                        _hover={{
+                          bg: "transparent",
+                          cursor: "default",
+                        }}
+                        _focus={{
+                          bg: "transparent",
+                        }}
+                      >
+                        {publicKey?.toString().slice(0, 6) +
+                          "..." +
+                          publicKey?.toString().slice(-4)}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          setSelected(null);
+                          disconnect();
+                        }}
+                      >
+                        Disconnect
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Box>
+                <Button
+                  fontWeight={"semibold"}
+                  color={"white"}
+                  bg={"backgroundTeal"}
+                  borderRadius={"10px"}
+                  px={3}
+                  py={2}
+                  _hover={{
+                    bg: "backgroundTealHover",
+                  }}
+                  fontSize="18px"
+                  as={NextLink}
+                  href="/dashboard"
+                >
+                  Dashboard
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  fontWeight={"semibold"}
+                  color={"white"}
+                  bg={"backgroundTeal"}
+                  borderRadius={"10px"}
+                  px={3}
+                  py={2}
+                  _hover={{
+                    bg: "backgroundTealHover",
+                  }}
+                  fontSize="18px"
+                  onClick={onWalletOpen}
+                >
+                  Connect Wallet
+                </Button>
+              </>
+            )}
+            <WalletModal
+              size={"xl"}
+              isOpen={isWalletOpen}
+              onClose={onWalletClose}
+              borderRadius={"24px"}
+              selected={selected}
+              setSelected={setSelected}
+            />
           </Stack>
         </Flex>
 
