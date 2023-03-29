@@ -4,6 +4,7 @@ import theme from "@/styles/theme";
 import LoadingBar from "@/components/Atoms/LoadingBar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { WalletWrapper } from "@/components/Wrappers/WalletWrapper";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -45,7 +46,9 @@ export default function App({ Component, pageProps }) {
         isRouteChanging={state.isRouteChanging}
         key={state.loadingKey}
       />
-      <Component {...pageProps} />
+      <WalletWrapper>
+        <Component {...pageProps} />
+      </WalletWrapper>
     </ChakraProvider>
   );
 }
