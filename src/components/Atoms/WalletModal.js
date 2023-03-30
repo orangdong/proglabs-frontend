@@ -20,10 +20,12 @@ import {
   Link,
 } from "@chakra-ui/react";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import useToastHook from "./ToastHook";
 import { storeData } from "@/lib/storeData";
 import { fetchData } from "@/lib/fetchData";
+import { sign } from "tweetnacl";
+import bs58 from "bs58";
 
 export default function WalletModal({
   isOpen,
@@ -37,7 +39,7 @@ export default function WalletModal({
     onOpen: onUserOpen,
     onClose: onUserClose,
   } = useDisclosure();
-  const { wallets, select, connect, publicKey } = useWallet();
+  const { wallets, select, connect, publicKey, signMessage } = useWallet();
   const [registerState, setRegisterState] = useState();
   const [registerData, setRegisterData] = useState();
   const [userData, setUserData] = useState({});
@@ -52,7 +54,7 @@ export default function WalletModal({
         return true;
       } catch (e) {
         console.log(e);
-        return setToast({ message: "Something went wrong", type: "danger" });
+        return setToast({ message: "Something went wrong", type: "error" });
       }
     }
 
@@ -78,7 +80,8 @@ export default function WalletModal({
 
   useEffect(() => {
     if (publicKey) {
-      registerUser(publicKey)
+      handleSign()
+        .then(() => registerUser(publicKey))
         .then((res) => {
           setRegisterState(res.status);
           if (res.status === "success") {
@@ -87,6 +90,7 @@ export default function WalletModal({
         })
         .catch(console.error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
 
   const handleUpdateUser = async () => {
@@ -99,7 +103,7 @@ export default function WalletModal({
       onUserClose();
       return setToast({ message: "User updated", type: "success" });
     }
-    return setToast({ message: "No wallet connected", type: "danger" });
+    return setToast({ message: "No wallet connected", type: "error" });
   };
 
   useEffect(() => {
@@ -111,6 +115,44 @@ export default function WalletModal({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [registerState]);
+
+  const handleSign = useCallback(async () => {
+    try {
+      // `publicKey` will be null if the wallet isn't connected
+      if (!publicKey) {
+        return setToast({ message: "No wallet connected", type: "error" });
+      }
+      // `signMessage` will be undefined if the wallet doesn't support it
+      if (!signMessage) {
+        return setToast({
+          message: "Wallet does not support message signing!",
+          type: "error",
+        });
+      }
+
+      // Encode anything as bytes
+      const message = new TextEncoder().encode(
+        "Sign this message to authenticate!"
+      );
+      // Sign the bytes using the wallet
+      const signature = await signMessage(message);
+      // Verify that the bytes were signed using the private key that matches the known public key
+      if (!sign.detached.verify(message, signature, publicKey.toBytes())) {
+        return setToast({ message: `Invalid signature`, type: "error" });
+      }
+
+      return setToast({
+        message: `Message signature: ${bs58.encode(signature)}`,
+        type: "success",
+      });
+    } catch (error) {
+      return setToast({
+        message: `Signing failed: ${error?.message}`,
+        type: "error",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [publicKey, signMessage]);
   return (
     <>
       <Modal

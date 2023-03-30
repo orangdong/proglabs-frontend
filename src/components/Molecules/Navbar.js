@@ -23,7 +23,7 @@ import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Image from "next/image";
 import { FiArrowRight, FiSearch, FiMoon, FiSun, FiUser } from "react-icons/fi";
 import Navlink from "../Atoms/Navlink";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo } from "react";
 import NextLink from "next/link";
 import WalletModal from "../Atoms/WalletModal";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -40,6 +40,7 @@ export default function Navbar({ course = [] }) {
   const [toggleSearch, setToggleSearch] = useState(false);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState();
+  const wallet = useWallet();
 
   const toggleDarkMode = () => {
     // const colorMode = localStorage.getItem("chakra-ui-color-mode");
@@ -291,6 +292,7 @@ export default function Navbar({ course = [] }) {
                       _hover={{ bg: "#E3E8F4" }}
                       bg={"white"}
                       px={2}
+                      py={1}
                       borderRadius={"10px"}
                       display={{ base: "none", md: "flex" }}
                       justifyContent={"center"}
@@ -310,6 +312,9 @@ export default function Navbar({ course = [] }) {
                         {publicKey?.toString().slice(0, 6) +
                           "..." +
                           publicKey?.toString().slice(-4)}
+                      </MenuItem>
+                      <MenuItem onClick={() => console.log(wallet)}>
+                        Check Wallet
                       </MenuItem>
                       <MenuItem
                         onClick={() => {

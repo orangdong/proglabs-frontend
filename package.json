@@ -19,6 +19,7 @@
     "@solana/wallet-adapter-wallets": "^0.19.16",
     "@solana/web3.js": "^1.74.0",
     "@tanem/react-nprogress": "^5.0.31",
+    "bs58": "^5.0.0",
     "chakra-react-select": "^4.6.0",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
@@ -26,7 +27,8 @@
     "next": "13.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.8.0"
+    "react-icons": "^4.8.0",
+    "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.6.0",
