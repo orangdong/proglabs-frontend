@@ -5,6 +5,7 @@ import LoadingBar from "@/components/Atoms/LoadingBar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { WalletWrapper } from "@/components/Wrappers/WalletWrapper";
+import { SessionProvider } from "next-auth/react";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -47,7 +48,9 @@ export default function App({ Component, pageProps }) {
         key={state.loadingKey}
       />
       <WalletWrapper>
-        <Component {...pageProps} />
+        <SessionProvider session={pageProps.session}>
+          <Component {...pageProps} />
+        </SessionProvider>
       </WalletWrapper>
     </ChakraProvider>
   );
