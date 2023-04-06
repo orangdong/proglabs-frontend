@@ -26,6 +26,7 @@ import { storeData } from "@/lib/storeData";
 import { fetchData } from "@/lib/fetchData";
 import { sign } from "tweetnacl";
 import bs58 from "bs58";
+import { signIn, useSession } from "next-auth/react";
 
 export default function WalletModal({
   isOpen,
@@ -40,6 +41,7 @@ export default function WalletModal({
     onClose: onUserClose,
   } = useDisclosure();
   const { wallets, select, connect, publicKey, signMessage } = useWallet();
+  const { data: session } = useSession();
   const [registerState, setRegisterState] = useState();
   const [registerData, setRegisterData] = useState();
   const [userData, setUserData] = useState({});
@@ -79,9 +81,17 @@ export default function WalletModal({
   }, [selected, connect]);
 
   useEffect(() => {
-    if (publicKey) {
+    if (publicKey && session === null) {
       handleSign()
-        .then(() => registerUser(publicKey))
+        .then((data) => {
+          signIn("credentials", {
+            publicKey: publicKey,
+            signature: data,
+            callbackUrl: `${window.location.origin}/dashboard`,
+            redirect: false,
+          });
+          registerUser(publicKey);
+        })
         .then((res) => {
           setRegisterState(res.status);
           if (res.status === "success") {
@@ -141,10 +151,7 @@ export default function WalletModal({
         return setToast({ message: `Invalid signature`, type: "error" });
       }
 
-      return setToast({
-        message: `Message signature: ${bs58.encode(signature)}`,
-        type: "success",
-      });
+      return bs58.encode(signature);
     } catch (error) {
       return setToast({
         message: `Signing failed: ${error?.message}`,

@@ -1,5 +1,8 @@
 import DashboardLayout from "@/components/DashboardLayout";
+import { useSession } from "next-auth/react";
 
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  const { status, data } = useSession();
+  console.log(status, data);
+  return <DashboardLayout title={"Dashboard"}>Dashboard</DashboardLayout>;
 }

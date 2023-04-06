@@ -18,6 +18,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Avatar,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Image from "next/image";
@@ -27,6 +28,8 @@ import { useState, useMemo } from "react";
 import NextLink from "next/link";
 import WalletModal from "../Atoms/WalletModal";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 export default function Navbar({ course = [] }) {
   const { isOpen, onToggle } = useDisclosure();
@@ -40,7 +43,7 @@ export default function Navbar({ course = [] }) {
   const [toggleSearch, setToggleSearch] = useState(false);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState();
-  const wallet = useWallet();
+  const { data: session } = useSession();
 
   const toggleDarkMode = () => {
     // const colorMode = localStorage.getItem("chakra-ui-color-mode");
@@ -283,6 +286,7 @@ export default function Navbar({ course = [] }) {
               icon={isDark ? <FiSun /> : <FiMoon />}
               onClick={toggleDarkMode}
               borderRadius={"10px"}
+              display={{ base: "none", md: "flex" }}
             />
             {connected ? (
               <>
@@ -294,12 +298,20 @@ export default function Navbar({ course = [] }) {
                       px={2}
                       py={1}
                       borderRadius={"10px"}
-                      display={{ base: "none", md: "flex" }}
+                      display={"flex"}
                       justifyContent={"center"}
                     >
                       <Icon boxSize={6} mt={1} as={FiUser} />
                     </MenuButton>
-                    <MenuList mt={5}>
+                    <MenuList
+                      mt={5}
+                      border={"1px solid white"}
+                      borderRadius={"24px"}
+                      py={5}
+                      px={3}
+                      minW={{ base: "80vw", md: 0 }}
+                      mr={{ base: "20px", md: 0 }}
+                    >
                       <MenuItem
                         _hover={{
                           bg: "transparent",
@@ -309,16 +321,29 @@ export default function Navbar({ course = [] }) {
                           bg: "transparent",
                         }}
                       >
-                        {publicKey?.toString().slice(0, 6) +
-                          "..." +
-                          publicKey?.toString().slice(-4)}
-                      </MenuItem>
-                      <MenuItem onClick={() => console.log(wallet)}>
-                        Check Wallet
+                        <Flex flexDir={"column"}>
+                          <Flex alignItems={"center"}>
+                            <Avatar
+                              size={"lg"}
+                              src={`https://ui-avatars.com/api/?name=${session.user.name}&color=656F78&background=F6F6F6`}
+                            />
+                            <Box ml={5}>
+                              <Text fontSize={"18px"} fontWeight={"semiBold"}>
+                                {session.user.name}
+                              </Text>
+                              <Text fontSize={"14px"} fontWeight={"light"}>
+                                {publicKey?.toString().slice(0, 6) +
+                                  "..." +
+                                  publicKey?.toString().slice(-4)}
+                              </Text>
+                            </Box>
+                          </Flex>
+                        </Flex>
                       </MenuItem>
                       <MenuItem
                         onClick={() => {
                           setSelected(null);
+                          signOut({ redirect: false });
                           disconnect();
                         }}
                       >
