@@ -325,11 +325,11 @@ export default function Navbar({ course = [] }) {
                           <Flex alignItems={"center"}>
                             <Avatar
                               size={"lg"}
-                              src={`https://ui-avatars.com/api/?name=${session.user.name}&color=656F78&background=F6F6F6`}
+                              src={`https://ui-avatars.com/api/?name=${session?.user.name}&color=656F78&background=F6F6F6`}
                             />
                             <Box ml={5}>
                               <Text fontSize={"18px"} fontWeight={"semiBold"}>
-                                {session.user.name}
+                                {session?.user.name}
                               </Text>
                               <Text fontSize={"14px"} fontWeight={"light"}>
                                 {publicKey?.toString().slice(0, 6) +
