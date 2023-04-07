@@ -5,12 +5,17 @@ import { useWallet } from "@solana/wallet-adapter-react";
 
 export default function useAuth(shouldRedirect) {
   const { data: session } = useSession();
-  const { disconnect, connected } = useWallet();
+  const { disconnect, connected, connect } = useWallet();
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const exp = new Date(session?.accessTokenExpiry);
+
+    if (session?.isWalletConnected) {
+      connect();
+    }
+
     if (exp < Date.now()) {
       disconnect();
       signOut({ callbackUrl: "/", redirect: shouldRedirect });

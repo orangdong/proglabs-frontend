@@ -19,6 +19,7 @@ import {
   MenuList,
   MenuItem,
   Avatar,
+  Divider,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, ChevronDownIcon } from "@chakra-ui/icons";
 import Image from "next/image";
@@ -307,10 +308,11 @@ export default function Navbar({ course = [] }) {
                       mt={5}
                       border={"1px solid white"}
                       borderRadius={"24px"}
-                      py={5}
+                      pt={5}
+                      pb={2}
                       px={3}
-                      minW={{ base: "80vw", md: 0 }}
-                      mr={{ base: "20px", md: 0 }}
+                      minW={{ base: "80vw", md: "30vw" }}
+                      mx={{ base: "20px", md: 0 }}
                     >
                       <MenuItem
                         _hover={{
@@ -320,9 +322,13 @@ export default function Navbar({ course = [] }) {
                         _focus={{
                           bg: "transparent",
                         }}
+                        _active={{
+                          bg: "transparent",
+                        }}
+                        as={Box}
                       >
                         <Flex flexDir={"column"}>
-                          <Flex alignItems={"center"}>
+                          <Flex alignItems={"center"} mb={"32px"}>
                             <Avatar
                               size={"lg"}
                               src={`https://ui-avatars.com/api/?name=${session?.user.name}&color=656F78&background=F6F6F6`}
@@ -338,16 +344,39 @@ export default function Navbar({ course = [] }) {
                               </Text>
                             </Box>
                           </Flex>
+                          <Link mb={3} fontSize={"18px"} fontWeight={"medium"}>
+                            Profile Settings
+                          </Link>
+                          <Link
+                            mb={3}
+                            fontSize={"18px"}
+                            fontWeight={"medium"}
+                            onClick={() => {
+                              setSelected(null);
+                              signOut({ redirect: false });
+                              disconnect();
+                            }}
+                          >
+                            Disconnect
+                          </Link>
+                          <Divider
+                            display={{ base: "flex", md: "none" }}
+                            my={3}
+                          />
+                          <IconButton
+                            bg={"white"}
+                            aria-label="toggle mode"
+                            _hover={{ bg: "#E3E8F4" }}
+                            fontSize="24px"
+                            px={2}
+                            py={2}
+                            icon={isDark ? <FiSun /> : <FiMoon />}
+                            onClick={toggleDarkMode}
+                            borderRadius={"10px"}
+                            display={{ base: "flex", md: "none" }}
+                            w={"fit-content"}
+                          />
                         </Flex>
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => {
-                          setSelected(null);
-                          signOut({ redirect: false });
-                          disconnect();
-                        }}
-                      >
-                        Disconnect
                       </MenuItem>
                     </MenuList>
                   </Menu>

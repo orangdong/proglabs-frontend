@@ -84,10 +84,9 @@ export default function WalletModal({
     if (publicKey && session === null) {
       handleSign()
         .then((data) => {
-          signIn("credentials", {
+          signIn("wallet-login", {
             publicKey: publicKey,
             signature: data,
-            callbackUrl: `${window.location.origin}/dashboard`,
             redirect: false,
           });
           registerUser(publicKey);

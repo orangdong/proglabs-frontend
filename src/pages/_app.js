@@ -47,11 +47,11 @@ export default function App({ Component, pageProps }) {
         isRouteChanging={state.isRouteChanging}
         key={state.loadingKey}
       />
-      <WalletWrapper>
-        <SessionProvider session={pageProps.session}>
+      <SessionProvider session={pageProps.session}>
+        <WalletWrapper>
           <Component {...pageProps} />
-        </SessionProvider>
-      </WalletWrapper>
+        </WalletWrapper>
+      </SessionProvider>
     </ChakraProvider>
   );
 }

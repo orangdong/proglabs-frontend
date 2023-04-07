@@ -5,6 +5,7 @@ const nextAuthOptions = (req, res) => {
   return {
     providers: [
       CredentialsProvider({
+        id: "wallet-login",
         type: "credentials",
         credentials: {},
         async authorize(credentials) {
@@ -47,6 +48,7 @@ const nextAuthOptions = (req, res) => {
           token.accessToken = user.data.accessToken;
           token.accessTokenExpiry = user.data.accessTokenExpiry;
           token.user = user.data.user;
+          token.isWalletConnected = true;
           //   token.refreshToken = user.data.refreshToken;
         }
 
@@ -69,6 +71,7 @@ const nextAuthOptions = (req, res) => {
         session.accessToken = token.accessToken;
         session.accessTokenExpiry = token.accessTokenExpiry;
         session.user = token.user;
+        session.isWalletConnected = token.isWalletConnected;
         // session.error = token.error;
 
         return Promise.resolve(session);
