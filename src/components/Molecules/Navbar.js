@@ -292,7 +292,7 @@ export default function Navbar({ course = [] }) {
             {connected ? (
               <>
                 <Box>
-                  <Menu>
+                  <Menu closeOnSelect={false}>
                     <MenuButton
                       _hover={{ bg: "#E3E8F4" }}
                       bg={"white"}
@@ -326,6 +326,7 @@ export default function Navbar({ course = [] }) {
                           bg: "transparent",
                         }}
                         as={Box}
+                        onClick={(e) => e.preventDefault()}
                       >
                         <Flex flexDir={"column"}>
                           <Flex alignItems={"center"} mb={"32px"}>
@@ -472,7 +473,7 @@ const MobileNavItem = ({ label, children, href }) => {
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
         py={2}
-        as={Link}
+        as={NextLink}
         href={href ?? "#"}
         justify={"space-between"}
         align={"center"}

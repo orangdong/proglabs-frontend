@@ -12,13 +12,13 @@ export default function useAuth(shouldRedirect) {
   useEffect(() => {
     const exp = new Date(session?.accessTokenExpiry);
 
-    if (session?.isWalletConnected) {
-      connect();
-    }
-
     if (exp < Date.now()) {
       disconnect();
       signOut({ callbackUrl: "/", redirect: shouldRedirect });
+    }
+
+    if (session?.isWalletConnected) {
+      connect();
     }
 
     if (router.route.includes("/dashboard") && !connected) {
