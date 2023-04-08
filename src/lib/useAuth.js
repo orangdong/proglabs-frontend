@@ -5,7 +5,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 
 export default function useAuth(shouldRedirect) {
   const { data: session } = useSession();
-  const { disconnect, connected, connect } = useWallet();
+  const { disconnect, connected, connect, select } = useWallet();
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -17,9 +17,10 @@ export default function useAuth(shouldRedirect) {
       signOut({ callbackUrl: "/", redirect: shouldRedirect });
     }
 
-    if (session?.isWalletConnected) {
-      connect();
-    }
+    // if (session?.isWalletConnected) {
+    //   select(session?.walletName);
+    //   connect();
+    // }
 
     if (router.route.includes("/dashboard") && !connected) {
       disconnect();

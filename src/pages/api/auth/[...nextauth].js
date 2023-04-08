@@ -11,7 +11,7 @@ const nextAuthOptions = (req, res) => {
         async authorize(credentials) {
           try {
             // Authenticate user with credentials
-            const { publicKey, signature } = credentials;
+            const { publicKey, signature, walletName } = credentials;
             const user = await fetch(
               `${process.env.NEXT_PUBLIC_API_URL}/v1/login`,
               {
@@ -31,7 +31,10 @@ const nextAuthOptions = (req, res) => {
               .catch(console.error);
 
             if (user.data.accessToken) {
-              return user;
+              return {
+                walletName,
+                ...user,
+              };
             }
 
             return null;
@@ -49,6 +52,7 @@ const nextAuthOptions = (req, res) => {
           token.accessTokenExpiry = user.data.accessTokenExpiry;
           token.user = user.data.user;
           token.isWalletConnected = true;
+          token.walletName = user.walletName;
           //   token.refreshToken = user.data.refreshToken;
         }
 
@@ -72,6 +76,7 @@ const nextAuthOptions = (req, res) => {
         session.accessTokenExpiry = token.accessTokenExpiry;
         session.user = token.user;
         session.isWalletConnected = token.isWalletConnected;
+        session.walletName = token.walletName;
         // session.error = token.error;
 
         return Promise.resolve(session);
