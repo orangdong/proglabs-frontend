@@ -41,6 +41,8 @@ export default function CourseDetail({ courseData, courses }) {
             <CourseModule
               image={courseData.thumbnail}
               module={courseData.courseModules}
+              isPremium={courseData.isPremium}
+              courseId={courseData.id}
             />
             <CourseDesc
               desc={courseData.description}
