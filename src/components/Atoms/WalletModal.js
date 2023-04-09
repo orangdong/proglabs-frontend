@@ -40,7 +40,8 @@ export default function WalletModal({
     onOpen: onUserOpen,
     onClose: onUserClose,
   } = useDisclosure();
-  const { wallets, select, connect, publicKey, signMessage } = useWallet();
+  const { wallets, select, connect, publicKey, signMessage, disconnect } =
+    useWallet();
   const { data: session } = useSession();
   const [registerState, setRegisterState] = useState();
   const [registerData, setRegisterData] = useState();
@@ -82,22 +83,29 @@ export default function WalletModal({
 
   useEffect(() => {
     if (publicKey && session === null) {
-      handleSign()
-        .then((data) => {
-          signIn("wallet-login", {
-            publicKey: publicKey,
-            signature: data,
-            redirect: false,
-          });
-          registerUser(publicKey);
-        })
-        .then((res) => {
+      const walletSign = async () => {
+        const sig = await handleSign();
+
+        if (!sig) {
+          return disconnect();
+        }
+
+        signIn("wallet-login", {
+          publicKey: publicKey,
+          signature: sig,
+          walletName: selected,
+          redirect: false,
+        });
+
+        const res = await registerUser(publicKey);
+
+        if (res.status === "success") {
           setRegisterState(res.status);
-          if (res.status === "success") {
-            setRegisterData(res.data);
-          }
-        })
-        .catch(console.error);
+          setRegisterData(res.data);
+        }
+      };
+
+      walletSign().catch(console.error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [publicKey]);
@@ -141,7 +149,7 @@ export default function WalletModal({
 
       // Encode anything as bytes
       const message = new TextEncoder().encode(
-        "Sign this message to authenticate!"
+        `Welcome to Proglabs,\nYour New Experience Learning Platform Partner!\n\nBefore continue using our services please click to sign in.\n\nNo password is required.\n\nYour authentication status will reset after 3 hour or after disconnecting your wallet.`
       );
       // Sign the bytes using the wallet
       const signature = await signMessage(message);

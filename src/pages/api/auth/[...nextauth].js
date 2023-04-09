@@ -12,6 +12,7 @@ const nextAuthOptions = (req, res) => {
           try {
             // Authenticate user with credentials
             const { publicKey, signature, walletName } = credentials;
+
             const user = await fetch(
               `${process.env.NEXT_PUBLIC_API_URL}/v1/login`,
               {

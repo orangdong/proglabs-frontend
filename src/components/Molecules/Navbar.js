@@ -289,7 +289,7 @@ export default function Navbar({ course = [] }) {
               borderRadius={"10px"}
               display={{ base: "none", md: "flex" }}
             />
-            {connected ? (
+            {connected && session ? (
               <>
                 <Box>
                   <Menu closeOnSelect={false}>
