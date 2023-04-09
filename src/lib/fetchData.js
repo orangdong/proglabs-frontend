@@ -1,8 +1,9 @@
-export const fetchData = async (endpoint) => {
+export const fetchData = async (endpoint, headers) => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
       "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
+      ...headers,
     },
   })
     .then((response) => response.json())
