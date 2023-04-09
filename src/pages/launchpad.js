@@ -2,8 +2,26 @@ import GeneralLayout from "@/components/GeneralLayout";
 import { Box, Flex, Text, Link, Button } from "@chakra-ui/react";
 import { fetchData } from "@/lib/fetchData";
 import Image from "next/image";
+import useToastHook from "@/components/Atoms/ToastHook";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { useSession } from "next-auth/react";
 
 export default function Launchpad({ courses }) {
+  const { connected } = useWallet();
+  const [toast, setToast] = useToastHook();
+  const { data: session } = useSession();
+
+  const handleMint = async (e) => {
+    e.preventDefault();
+
+    if (!connected || session === null) {
+      // check if wallet connected
+      return setToast({
+        message: "Please connect wallet first",
+        type: "warning",
+      });
+    }
+  };
   return (
     <GeneralLayout title={"Launchpad"} courses={courses}>
       <Box>
@@ -147,6 +165,7 @@ export default function Launchpad({ courses }) {
                     mb={3}
                     w={"full"}
                     py={"24px"}
+                    onClick={handleMint}
                   >
                     Mint
                   </Button>
