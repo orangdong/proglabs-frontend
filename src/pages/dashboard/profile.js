@@ -3,7 +3,7 @@ import { Text } from "@chakra-ui/react";
 
 export default function Profile() {
   return (
-    <DashboardLayout>
+    <DashboardLayout title={"Profile"}>
       <Text>Profile</Text>
     </DashboardLayout>
   );
