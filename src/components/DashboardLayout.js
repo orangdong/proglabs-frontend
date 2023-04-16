@@ -92,7 +92,13 @@ export default function DashboardLayout({ title, children }) {
           flexDir={{ base: "column-reverse", md: "row" }}
         >
           <Sidebar />
-          <Box h={"full"} w={"full"} py={5} px={{ base: 4, md: 5 }}>
+          <Box
+            h={"full"}
+            w={"full"}
+            py={5}
+            px={{ base: 4, md: 5 }}
+            overflow={"auto"}
+          >
             <Text fontSize={"28px"} fontWeight={"bold"} mb={3}>
               {title}
             </Text>
