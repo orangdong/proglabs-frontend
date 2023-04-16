@@ -24,7 +24,7 @@ export default function SidebarLink({ title, link, icon }) {
     >
       <Icon
         as={icon}
-        fontSize={{ base: "16", md: "18" }}
+        fontSize={{ base: "18", md: "18" }}
         mr={{ base: 0, md: 4 }}
         mb={{ base: 1, md: 0 }}
       />

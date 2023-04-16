@@ -40,6 +40,7 @@ export default function Sidebar() {
       px={3}
       py={{ base: 1, md: 5 }}
       justifyContent={{ base: "space-between", md: "normal" }}
+      zIndex={3}
     >
       <Box
         as={NextLink}
@@ -51,8 +52,8 @@ export default function Sidebar() {
         <Image
           src="/assets/logo-black.svg"
           alt="logo"
-          width="175"
-          height="40"
+          width="160"
+          height="35"
         />
       </Box>
       {links.map((link, i) => (
