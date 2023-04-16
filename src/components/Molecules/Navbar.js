@@ -312,7 +312,7 @@ export default function Navbar({ course = [] }) {
                       pb={2}
                       px={3}
                       minW={{ base: "80vw", md: "30vw" }}
-                      mx={{ base: "20px", md: 0 }}
+                      mx={{ base: "16px", md: 0 }}
                     >
                       <MenuItem
                         _hover={{
@@ -330,12 +330,14 @@ export default function Navbar({ course = [] }) {
                       >
                         <Flex flexDir={"column"}>
                           <Flex alignItems={"center"} mb={"32px"}>
-                            <Avatar
-                              size={"lg"}
-                              src={`https://ui-avatars.com/api/?name=${session?.user.name}&color=656F78&background=F6F6F6`}
-                            />
+                            <Avatar size={"lg"} src={session?.user.avatar} />
                             <Box ml={5}>
-                              <Text fontSize={"18px"} fontWeight={"semiBold"}>
+                              <Text
+                                fontSize={"18px"}
+                                fontWeight={"semiBold"}
+                                noOfLines={1}
+                                maxW={"150px"}
+                              >
                                 {session?.user.name}
                               </Text>
                               <Text fontSize={"14px"} fontWeight={"light"}>
@@ -345,7 +347,13 @@ export default function Navbar({ course = [] }) {
                               </Text>
                             </Box>
                           </Flex>
-                          <Link mb={3} fontSize={"18px"} fontWeight={"medium"}>
+                          <Link
+                            as={NextLink}
+                            href={"/dashboard/profile"}
+                            mb={3}
+                            fontSize={"18px"}
+                            fontWeight={"medium"}
+                          >
                             Profile Settings
                           </Link>
                           <Link

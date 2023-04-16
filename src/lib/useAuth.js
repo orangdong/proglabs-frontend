@@ -22,10 +22,10 @@ export default function useAuth(shouldRedirect) {
     //   connect();
     // }
 
-    if (router.route.includes("/dashboard") && !connected) {
-      disconnect();
-      router.replace("/");
-    }
+    // if (router.route.includes("/dashboard") && !connected) {
+    //   disconnect();
+    //   router.replace("/");
+    // }
 
     if (session === null) {
       disconnect();

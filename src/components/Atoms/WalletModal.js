@@ -43,8 +43,6 @@ export default function WalletModal({
   const { wallets, select, connect, publicKey, signMessage, disconnect } =
     useWallet();
   const { data: session } = useSession();
-  const [registerState, setRegisterState] = useState();
-  const [registerData, setRegisterData] = useState();
   const [userData, setUserData] = useState({});
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [toast, setToast] = useToastHook();
@@ -84,6 +82,17 @@ export default function WalletModal({
   useEffect(() => {
     if (publicKey && session === null) {
       const walletSign = async () => {
+        // check if user already registered
+        const getUser = await fetchData(`/v1/users/${publicKey}`);
+
+        if (getUser === null) {
+          const res = await registerUser(publicKey);
+
+          if (res.status === "success") {
+            onUserOpen();
+          }
+        }
+
         const sig = await handleSign();
 
         if (!sig) {
@@ -96,13 +105,6 @@ export default function WalletModal({
           walletName: selected,
           redirect: false,
         });
-
-        const res = await registerUser(publicKey);
-
-        if (res.status === "success") {
-          setRegisterState(res.status);
-          setRegisterData(res.data);
-        }
       };
 
       walletSign().catch(console.error);
@@ -122,16 +124,6 @@ export default function WalletModal({
     }
     return setToast({ message: "No wallet connected", type: "error" });
   };
-
-  useEffect(() => {
-    if (registerState) {
-      if (registerState === "success") {
-        // open new modal for edit name
-        onUserOpen();
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [registerState]);
 
   const handleSign = useCallback(async () => {
     try {
@@ -286,7 +278,7 @@ export default function WalletModal({
               <Link
                 onClick={() =>
                   setUserData((curr) => ({
-                    name: registerData?.name,
+                    name: publicKey,
                   }))
                 }
                 color={"textGray"}
@@ -318,21 +310,13 @@ export default function WalletModal({
 }
 
 const registerUser = async (publicKey) => {
-  const getUser = await fetchData(`/v1/users/${publicKey}`);
-  if (getUser && getUser.status) {
-    return {
-      data: "something went wrong",
-      status: "error",
-    };
-  }
+  const user = await storeData({
+    endpoint: "/v1/users",
+    method: "POST",
+    body: { address: publicKey },
+  });
 
-  if (getUser === null) {
-    const user = await storeData({
-      endpoint: "/v1/users",
-      method: "POST",
-      body: { address: publicKey },
-    });
-
+  if (!user.status) {
     return {
       data: user,
       status: "success",
