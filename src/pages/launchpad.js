@@ -6,7 +6,7 @@ import useToastHook from "@/components/Atoms/ToastHook";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useSession } from "next-auth/react";
 
-export default function Launchpad({ courses }) {
+export default function Launchpad({ courses, mintData }) {
   const { connected } = useWallet();
   const [toast, setToast] = useToastHook();
   const { data: session } = useSession();
@@ -125,7 +125,7 @@ export default function Launchpad({ courses }) {
                       color={"textWhite"}
                       fontSize={{ base: "18px", md: "22px" }}
                     >
-                      1 SOL
+                      {mintData.mintPrice} SOL
                     </Text>
                   </Flex>
                   <Flex w={"full"} justifyContent={"space-between"} mb={4}>
@@ -139,7 +139,7 @@ export default function Launchpad({ courses }) {
                       fontSize={{ base: "16px", md: "18px" }}
                       color={"#C4C4C4"}
                     >
-                      447/1000
+                      {mintData.totalMinted}/{mintData.totalItems}
                     </Text>
                   </Flex>
                   <Box
@@ -152,7 +152,9 @@ export default function Launchpad({ courses }) {
                     <Box
                       h={"12px"}
                       borderRadius={"100px"}
-                      w={"50%"}
+                      w={`${
+                        (mintData.totalMinted / mintData.totalItems) * 100
+                      }%`}
                       bg={"#ECFEFF"}
                     />
                   </Box>
@@ -174,7 +176,7 @@ export default function Launchpad({ courses }) {
                     color={"#C4C4C4"}
                     textAlign={"center"}
                   >
-                    Limit 1 per wallet
+                    Limit {mintData.mintLimit} per wallet
                   </Text>
                 </Box>
               </Flex>
@@ -188,8 +190,9 @@ export default function Launchpad({ courses }) {
 
 export const getServerSideProps = async () => {
   const data = await fetchData("/v1/courses");
+  const mintData = await fetchData("/v1/membership/mint-data");
 
   return {
-    props: { courses: data },
+    props: { courses: data, mintData },
   };
 };
