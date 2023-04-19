@@ -5,11 +5,19 @@ import Image from "next/image";
 import useToastHook from "@/components/Atoms/ToastHook";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { useMetaplex } from "@/lib/useMetaplex";
+import { PublicKey } from "@solana/web3.js";
+import { storeData } from "@/lib/storeData";
 
 export default function Launchpad({ courses, mintData }) {
   const { connected } = useWallet();
+  const { metaplex } = useMetaplex();
   const [toast, setToast] = useToastHook();
   const { data: session } = useSession();
+  const [candyMachine, setCandyMachine] = useState(null);
+  const [guard, setGuard] = useState(null);
+  const [mintLoading, setMintLoading] = useState(false);
 
   const handleMint = async (e) => {
     e.preventDefault();
@@ -21,7 +29,150 @@ export default function Launchpad({ courses, mintData }) {
         type: "warning",
       });
     }
+
+    if (candyMachine && guard) {
+      setMintLoading(true);
+      // check if enough items
+      if (
+        candyMachine.itemsMinted.toString(10) -
+          candyMachine.itemsAvailable.toString(10) >
+        0
+      ) {
+        setMintLoading(false);
+        return setToast({
+          message: "not enough items available",
+          type: "warning",
+        });
+      }
+
+      // check if enough sol balance
+      if (guard.solPayment != null) {
+        const ballance = await metaplex.connection.getBalance(
+          metaplex.identity().publicKey
+        );
+
+        const costInLamports = guard.solPayment.amount.basisPoints.toString(10);
+
+        if (costInLamports > ballance) {
+          setMintLoading(false);
+          return setToast({
+            message: "Not enough SOL in wallet",
+            type: "warning",
+          });
+        }
+      }
+
+      // check mint limit
+      if (guard.mintLimit != null) {
+        const mitLimitCounter = metaplex
+          .candyMachines()
+          .pdas()
+          .mintLimitCounter({
+            id: guard.mintLimit.id,
+            user: metaplex.identity().publicKey,
+            candyMachine: candyMachine.address,
+            candyGuard: candyMachine.candyGuard.address,
+          });
+
+        //Read Data from chain
+        const mintedAmountBuffer = await metaplex.connection.getAccountInfo(
+          mitLimitCounter,
+          "processed"
+        );
+
+        let mintedAmount;
+        if (mintedAmountBuffer != null) {
+          mintedAmount = mintedAmountBuffer.data.readUintLE(0, 1);
+        }
+        if (mintedAmount != null && mintedAmount >= guard.mintLimit.limit) {
+          setMintLoading(false);
+          return setToast({
+            message: "Mint limit reached",
+            type: "warning",
+          });
+        }
+      }
+
+      const { nft } = await metaplex.candyMachines().mint({
+        candyMachine,
+        collectionUpdateAuthority: candyMachine.authorityAddress,
+      });
+
+      const register = await registerNftAddress({
+        mintAddress: nft.mint.address.toBase58(),
+      });
+
+      if (register.status !== "success") {
+        setMintLoading(false);
+        return setToast({
+          message: "Something went wrong",
+          type: "error",
+        });
+      }
+
+      setMintLoading(false);
+      return setToast({
+        message: "Progpass mint success! please check your wallet",
+        type: "success",
+      });
+    }
+
+    return setToast({
+      message: "Something went wrong",
+      type: "error",
+    });
   };
+
+  const registerNftAddress = async ({ mintAddress }) => {
+    try {
+      if (!session) {
+        return setToast({
+          message: "Something went wrong",
+          type: "error",
+        });
+      }
+
+      const register = await storeData({
+        endpoint: "/v1/membership",
+        headers: {
+          "x-auth-token": session?.accessToken,
+        },
+        method: "POST",
+        body: {
+          mintAddress,
+        },
+      });
+
+      return {
+        status: "success",
+        data: register,
+      };
+    } catch (e) {
+      return e;
+    }
+  };
+
+  const checkEligibility = async () => {
+    const candyMachineAddress = new PublicKey(
+      process.env.NEXT_PUBLIC_CANDY_MACHINE_ID
+    );
+    const cm = await metaplex
+      .candyMachines()
+      .findByAddress({ address: candyMachineAddress });
+
+    setCandyMachine(cm);
+
+    // guard checks have to be done for the relevant guard group! Example is for the default groups defined in Part 1 of the CM guide
+    const guards = cm.candyGuard.guards;
+    setGuard(guards);
+  };
+
+  useEffect(() => {
+    if (connected) {
+      checkEligibility().catch(console.error);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected]);
   return (
     <GeneralLayout title={"Launchpad"} courses={courses}>
       <Box>
@@ -108,7 +259,8 @@ export default function Launchpad({ courses, mintData }) {
                       _hover={{ color: "textWhite" }}
                     >
                       solfaucet.com
-                    </Link>
+                    </Link>{" "}
+                    (max 2 SOL / day)
                   </Text>
                 </Box>
                 <Box>
@@ -168,6 +320,7 @@ export default function Launchpad({ courses, mintData }) {
                     w={"full"}
                     py={"24px"}
                     onClick={handleMint}
+                    isLoading={mintLoading}
                   >
                     Mint
                   </Button>
