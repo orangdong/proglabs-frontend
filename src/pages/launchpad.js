@@ -20,107 +20,112 @@ export default function Launchpad({ courses, mintData }) {
   const [mintLoading, setMintLoading] = useState(false);
 
   const handleMint = async (e) => {
-    e.preventDefault();
+    try {
+      e.preventDefault();
 
-    if (!connected || session === null) {
-      // check if wallet connected
-      return setToast({
-        message: "Please connect wallet first",
-        type: "warning",
-      });
-    }
-
-    if (candyMachine && guard) {
-      setMintLoading(true);
-      // check if enough items
-      if (
-        candyMachine.itemsMinted.toString(10) -
-          candyMachine.itemsAvailable.toString(10) >
-        0
-      ) {
-        setMintLoading(false);
+      if (!connected || session === null) {
+        // check if wallet connected
         return setToast({
-          message: "not enough items available",
+          message: "Please connect wallet first",
           type: "warning",
         });
       }
 
-      // check if enough sol balance
-      if (guard.solPayment != null) {
-        const ballance = await metaplex.connection.getBalance(
-          metaplex.identity().publicKey
-        );
-
-        const costInLamports = guard.solPayment.amount.basisPoints.toString(10);
-
-        if (costInLamports > ballance) {
+      if (candyMachine && guard) {
+        setMintLoading(true);
+        // check if enough items
+        if (
+          candyMachine.itemsMinted.toString(10) -
+            candyMachine.itemsAvailable.toString(10) >
+          0
+        ) {
           setMintLoading(false);
           return setToast({
-            message: "Not enough SOL in wallet",
+            message: "not enough items available",
             type: "warning",
           });
         }
-      }
 
-      // check mint limit
-      if (guard.mintLimit != null) {
-        const mitLimitCounter = metaplex
-          .candyMachines()
-          .pdas()
-          .mintLimitCounter({
-            id: guard.mintLimit.id,
-            user: metaplex.identity().publicKey,
-            candyMachine: candyMachine.address,
-            candyGuard: candyMachine.candyGuard.address,
-          });
+        // check if enough sol balance
+        if (guard.solPayment != null) {
+          const ballance = await metaplex.connection.getBalance(
+            metaplex.identity().publicKey
+          );
 
-        //Read Data from chain
-        const mintedAmountBuffer = await metaplex.connection.getAccountInfo(
-          mitLimitCounter,
-          "processed"
-        );
+          const costInLamports =
+            guard.solPayment.amount.basisPoints.toString(10);
 
-        let mintedAmount;
-        if (mintedAmountBuffer != null) {
-          mintedAmount = mintedAmountBuffer.data.readUintLE(0, 1);
+          if (costInLamports > ballance) {
+            setMintLoading(false);
+            return setToast({
+              message: "Not enough SOL in wallet",
+              type: "warning",
+            });
+          }
         }
-        if (mintedAmount != null && mintedAmount >= guard.mintLimit.limit) {
+
+        // check mint limit
+        if (guard.mintLimit != null) {
+          const mitLimitCounter = metaplex
+            .candyMachines()
+            .pdas()
+            .mintLimitCounter({
+              id: guard.mintLimit.id,
+              user: metaplex.identity().publicKey,
+              candyMachine: candyMachine.address,
+              candyGuard: candyMachine.candyGuard.address,
+            });
+
+          //Read Data from chain
+          const mintedAmountBuffer = await metaplex.connection.getAccountInfo(
+            mitLimitCounter,
+            "processed"
+          );
+
+          let mintedAmount;
+          if (mintedAmountBuffer != null) {
+            mintedAmount = mintedAmountBuffer.data.readUintLE(0, 1);
+          }
+          if (mintedAmount != null && mintedAmount >= guard.mintLimit.limit) {
+            setMintLoading(false);
+            return setToast({
+              message: "Mint limit reached",
+              type: "warning",
+            });
+          }
+        }
+
+        const { nft } = await metaplex.candyMachines().mint({
+          candyMachine,
+          collectionUpdateAuthority: candyMachine.authorityAddress,
+        });
+
+        const register = await registerNftAddress({
+          mintAddress: nft.mint.address.toBase58(),
+        });
+
+        if (register.status !== "success") {
           setMintLoading(false);
           return setToast({
-            message: "Mint limit reached",
-            type: "warning",
+            message: "Something went wrong",
+            type: "error",
           });
         }
-      }
 
-      const { nft } = await metaplex.candyMachines().mint({
-        candyMachine,
-        collectionUpdateAuthority: candyMachine.authorityAddress,
-      });
-
-      const register = await registerNftAddress({
-        mintAddress: nft.mint.address.toBase58(),
-      });
-
-      if (register.status !== "success") {
         setMintLoading(false);
         return setToast({
-          message: "Something went wrong",
-          type: "error",
+          message: "Progpass mint success! please check your wallet",
+          type: "success",
         });
       }
-
+    } catch (e) {
+      console.error(e);
       setMintLoading(false);
       return setToast({
-        message: "Progpass mint success! please check your wallet",
-        type: "success",
+        message: "Something went wrong, Mint Failed",
+        type: "error",
       });
     }
-
-    return setToast({
-      message: "Something went wrong",
-      type: "error",
-    });
   };
 
   const registerNftAddress = async ({ mintAddress }) => {
