@@ -20,14 +20,18 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { storeData } from "@/lib/storeData";
+import { useMetaplex } from "@/lib/useMetaplex";
 
 export default function CourseModule({ image, module, isPremium, courseId }) {
   const [toast, setToast] = useToastHook();
   const { connected } = useWallet();
+  const { metaplex } = useMetaplex();
   const { data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const [enrolled, setEnrolled] = useState(false);
+  const [memberships, setMemberships] = useState([]);
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   const handleEnroll = async (e) => {
     e.preventDefault();
@@ -39,11 +43,22 @@ export default function CourseModule({ image, module, isPremium, courseId }) {
         type: "warning",
       });
     }
+    setButtonLoading(true);
 
     if (isPremium) {
       // check if user have membership
+      const getUserNfts = await metaplex.nfts().findAllByOwner({
+        owner: metaplex.identity().publicKey,
+      });
+      const nfts = getUserNfts.map((nft) => nft.mintAddress.toBase58());
+      const checkMembership = memberships.some((membership) =>
+        nfts.includes(membership)
+      );
 
-      return onOpen();
+      if (!checkMembership) {
+        setButtonLoading(false);
+        return onOpen();
+      }
     }
 
     const enrollCourse = await storeData({
@@ -55,12 +70,14 @@ export default function CourseModule({ image, module, isPremium, courseId }) {
     });
 
     if (enrollCourse?.status) {
+      setButtonLoading(false);
       return setToast({
         message: enrollCourse.message,
         type: "error",
       });
     }
 
+    setButtonLoading(false);
     setToast({
       message: "Course enrolled",
       type: "success",
@@ -84,6 +101,17 @@ export default function CourseModule({ image, module, isPremium, courseId }) {
         .then((data) =>
           data.data === null ? setEnrolled(false) : setEnrolled(true)
         )
+        .catch((error) => console.error(error));
+
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/membership`, {
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
+          "x-auth-token": session?.accessToken,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setMemberships(data.data))
         .catch((error) => console.error(error));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -160,6 +188,7 @@ export default function CourseModule({ image, module, isPremium, courseId }) {
             py={"24px"}
             onClick={handleEnroll}
             isDisabled={enrolled}
+            isLoading={buttonLoading}
           >
             {enrolled ? "Course Enrolled" : "Enroll Course"}
           </Button>
