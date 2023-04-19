@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { WalletWrapper } from "@/components/Wrappers/WalletWrapper";
 import { SessionProvider } from "next-auth/react";
+import { MetaplexProvider } from "@/components/Wrappers/MetaplexProvider";
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
@@ -49,7 +50,9 @@ export default function App({ Component, pageProps }) {
       />
       <SessionProvider session={pageProps.session}>
         <WalletWrapper>
-          <Component {...pageProps} />
+          <MetaplexProvider>
+            <Component {...pageProps} />
+          </MetaplexProvider>
         </WalletWrapper>
       </SessionProvider>
     </ChakraProvider>
