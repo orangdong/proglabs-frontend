@@ -69,6 +69,7 @@ export default function Profile({ user, session }) {
       title: "Getting Started With NodeJS",
     },
   ];
+
   return (
     <DashboardLayout title={"Profile"}>
       <Flex w={"full"} maxW={"2xl"} mx={"auto"} flexDir={"column"} my={5}>
