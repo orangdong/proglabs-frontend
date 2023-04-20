@@ -13,8 +13,8 @@ export default function Sidebar() {
       icon: FiHome,
     },
     {
-      title: "My Course",
-      link: "/dashboard/my-course",
+      title: "My Courses",
+      link: "/dashboard/my-courses",
       icon: FiBookOpen,
     },
     {
