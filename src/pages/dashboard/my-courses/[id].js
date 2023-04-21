@@ -2,7 +2,6 @@ import DashboardLayout from "@/components/DashboardLayout";
 import useMembership from "@/lib/useMembership";
 import { getSession } from "next-auth/react";
 import { fetchData } from "@/lib/fetchData";
-import { useEffect } from "react";
 
 export default function MyCoursesDetail({ memberships, course, session }) {
   const isMembership = useMembership({
