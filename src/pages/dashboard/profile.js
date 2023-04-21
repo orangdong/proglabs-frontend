@@ -18,6 +18,7 @@ import { useState } from "react";
 import useToastHook from "@/components/Atoms/ToastHook";
 import { storeData } from "@/lib/storeData";
 import { fetchData } from "@/lib/fetchData";
+import Certificate from "@/components/Atoms/Certificate";
 
 export default function Profile({ user, session }) {
   const [userProfile, setUserProfile] = useState({
@@ -51,24 +52,6 @@ export default function Profile({ user, session }) {
     setButtonLoading(false);
     return setToast({ message: "User profile updated", type: "success" });
   };
-
-  const cert = [
-    {
-      url: "https://simplecert.net/wp-content/uploads/2018/03/EM-Lab-Certificate-1.png",
-      obtainedAt: "Apr 16, 2023",
-      title: "Starter Course: Basic Javascript",
-    },
-    {
-      url: "https://simplecert.net/wp-content/uploads/2018/03/EM-Lab-Certificate-1.png",
-      obtainedAt: "Apr 16, 2023",
-      title: "Advanced Javascript",
-    },
-    {
-      url: "https://simplecert.net/wp-content/uploads/2018/03/EM-Lab-Certificate-1.png",
-      obtainedAt: "Apr 16, 2023",
-      title: "Getting Started With NodeJS",
-    },
-  ];
 
   return (
     <DashboardLayout title={"Profile"}>
@@ -204,28 +187,23 @@ export default function Profile({ user, session }) {
             w={"full"}
             justifyContent={{ base: "center", md: "flex-start" }}
           >
-            {cert.map((c, i) => (
-              <Flex
-                key={i}
-                flexDir={"column"}
-                alignItems={"center"}
-                mr={5}
-                mb={5}
-              >
-                <Image
-                  w={"full"}
-                  h={"auto"}
-                  maxW={"250px"}
-                  src={c.url}
-                  alt="cert"
-                  mb={3}
-                />
-                <Text fontWeight={"medium"} fontSize={"18px"}>
-                  {c.title}
-                </Text>
-                <Text fontSize={"16px"}>Earned {c.obtainedAt}</Text>
-              </Flex>
-            ))}
+            {user.userCourses.filter(
+              (uc) => uc.isComplete && uc.course.isPremium
+            ).length < 1 ? (
+              <Text fontSize={"18px"}>No certificate</Text>
+            ) : (
+              user.userCourses
+                .filter((uc) => uc.isComplete && uc.course.isPremium)
+                .map((c, i) => (
+                  <Certificate
+                    key={i}
+                    title={c.course.title}
+                    name={userProfile.name}
+                    image={c.course.certificate}
+                    completedAt={c.completedAt}
+                  />
+                ))
+            )}
           </Flex>
         </Box>
       </Flex>
