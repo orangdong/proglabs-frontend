@@ -17,7 +17,7 @@ import NextImage from "next/image";
 import NextLink from "next/link";
 
 export default function MyCourses({ userCourses, session, memberships }) {
-  const isMembership = useMembership(memberships);
+  const isMembership = useMembership({ memberships });
   return (
     <DashboardLayout title={"My Courses"}>
       <Tabs position="relative" variant="unstyled" mt={5}>
