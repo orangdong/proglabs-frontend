@@ -127,7 +127,7 @@ export default function MyCoursesDetail({ memberships, course, session }) {
           overflowY={"auto"}
         >
           {allLessons.map((al, i) => (
-            <TabPanel key={i}>
+            <TabPanel key={i} px={0}>
               <Flex w={"full"} flexDir={"column"}>
                 <Flex
                   w={"full"}
