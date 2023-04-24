@@ -47,7 +47,10 @@ export default function WalletModal({
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [toast, setToast] = useToastHook();
   const handleWallet = async (wallet) => {
-    if (wallet.readyState === "Installed") {
+    if (
+      wallet.readyState === "Installed" ||
+      wallet.adapter.name === "Mobile Wallet Adapter"
+    ) {
       setIsButtonLoading(true);
       try {
         select(wallet.adapter.name);
