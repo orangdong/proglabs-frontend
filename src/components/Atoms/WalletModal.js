@@ -47,10 +47,7 @@ export default function WalletModal({
   const [isButtonLoading, setIsButtonLoading] = useState(false);
   const [toast, setToast] = useToastHook();
   const handleWallet = async (wallet) => {
-    if (
-      wallet.readyState === "Installed" ||
-      wallet.adapter.name === "Mobile Wallet Adapter"
-    ) {
+    if (wallet.readyState === "Installed") {
       setIsButtonLoading(true);
       try {
         select(wallet.adapter.name);
@@ -182,17 +179,6 @@ export default function WalletModal({
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            {/* delete this */}
-            <Box>
-              <Text>Wallets</Text>
-              {wallets.map((wallet, i) => (
-                <p key={i}>
-                  {console.log(wallet)}
-                  {wallet.adapter.name} - {wallet.readyState} -{" "}
-                  {wallet.adapter.url}
-                </p>
-              ))}
-            </Box>
             {wallets.map((wallet) => (
               <Flex
                 key={wallet.adapter.name}
