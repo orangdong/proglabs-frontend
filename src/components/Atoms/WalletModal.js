@@ -184,7 +184,9 @@ export default function WalletModal({
               <Text>Wallets</Text>
               {wallets.map((wallet, i) => (
                 <p key={i}>
-                  {wallet.adapter.name} - {wallet.readyState}
+                  {console.log(wallet)}
+                  {wallet.adapter.name} - {wallet.readyState} -{" "}
+                  {wallet.adapter.url}
                 </p>
               ))}
             </Box>
