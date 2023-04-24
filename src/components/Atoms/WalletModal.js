@@ -59,6 +59,7 @@ export default function WalletModal({
       }
     }
 
+    console.log(wallet);
     return setToast({ message: "Wallet not installed", type: "warning" });
   };
 
