@@ -59,7 +59,6 @@ export default function WalletModal({
       }
     }
 
-    console.log(wallet);
     return setToast({ message: "Wallet not installed", type: "warning" });
   };
 
@@ -180,6 +179,15 @@ export default function WalletModal({
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
+            {/* delete this */}
+            <Box>
+              <Text>Wallets</Text>
+              {wallets.map((wallet, i) => (
+                <p key={i}>
+                  {wallet.adapter.name} - {wallet.readyState}
+                </p>
+              ))}
+            </Box>
             {wallets.map((wallet) => (
               <Flex
                 key={wallet.adapter.name}
