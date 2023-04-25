@@ -39,7 +39,14 @@ export default function Certificate({ name, image, title, completedAt }) {
             mb={3}
             borderRadius={"6px"}
           />
-          <Text pos={"absolute"} bottom={"98px"} right={"30%"}>
+          <Text
+            pos={"absolute"}
+            w={"full"}
+            textAlign={"center"}
+            top={"42%"}
+            left={"50%"}
+            transform={"translate(-50%, -50%)"}
+          >
             {name}
           </Text>
         </Box>
@@ -49,6 +56,7 @@ export default function Certificate({ name, image, title, completedAt }) {
         </Text>
         <Text fontSize={"16px"}>Earned {completedAt}</Text>
       </Flex>
+      {/* modal */}
       <Modal
         onClose={onClose}
         isOpen={isOpen}
@@ -85,9 +93,13 @@ export default function Certificate({ name, image, title, completedAt }) {
               <Text
                 colot={"black"}
                 pos={"absolute"}
-                bottom={"51%"}
+                top={"45%"}
                 fontSize={{ base: "20px", md: "28px" }}
-                right={{ base: "30%", md: "35%" }}
+                // right={{ base: "30%", md: "35%" }}
+                w={"full"}
+                textAlign={"center"}
+                left={"50%"}
+                transform={"translate(-50%, -50%)"}
               >
                 {name}
               </Text>
