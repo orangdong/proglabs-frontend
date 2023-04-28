@@ -78,3 +78,9 @@
     -webkit-mask-composite: xor;
     mask-composite: exclude;
 }
+
+pre{
+    background: var(--chakra-colors-gray-100) !important;
+    padding: 16px;
+    border-radius: 8px;
+}

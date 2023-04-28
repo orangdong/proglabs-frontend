@@ -17,6 +17,9 @@ import { FiCheckCircle } from "react-icons/fi";
 import { useState } from "react";
 import useToastHook from "@/components/Atoms/ToastHook";
 import { storeData } from "@/lib/storeData";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 export default function MyCoursesDetail({ memberships, course, session }) {
   const isMembership = useMembership({
@@ -159,7 +162,15 @@ export default function MyCoursesDetail({ memberships, course, session }) {
                   <Text fontWeight={"medium"} fontSize={"18px"} mb={3}>
                     {al.title}
                   </Text>
-                  <p>{al.content}</p>
+                  <Box>
+                    <ReactMarkdown
+                      skipHtml={false}
+                      rehypePlugins={[rehypeRaw]}
+                      remarkPlugins={[remarkGfm]}
+                    >
+                      {al.content}
+                    </ReactMarkdown>
+                  </Box>
                 </Box>
               </Flex>
             </TabPanel>
