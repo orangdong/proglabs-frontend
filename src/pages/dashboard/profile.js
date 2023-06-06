@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { getSession } from "next-auth/react";
 import { BsCamera } from "react-icons/bs";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import useToastHook from "@/components/Atoms/ToastHook";
 import { storeData } from "@/lib/storeData";
 import { fetchData } from "@/lib/fetchData";
@@ -30,27 +30,69 @@ export default function Profile({ user, session }) {
   const [errorName, setErrorName] = useState(false);
   const [toast, setToast] = useToastHook();
   const [buttonLoading, setButtonLoading] = useState(false);
-  const handleUpload = async () => {};
-  const handleSubmit = async () => {
-    if (!userProfile.name) {
-      return setErrorName(true);
+  const fileInputRef = useRef(null);
+  const [uploadedAvatar, setUploadedAvatar] = useState(null);
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      // validate size
+      const maxSize = 2.5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        return setToast({ message: "File size max 2.5mb", type: "warning" });
+      }
+      // validate file type
+      const allowedFileTypes = ["image/png", "image/jpeg", "image/jpg"];
+      if (!allowedFileTypes.includes(file.type)) {
+        return setToast({
+          message: "Only .png, .jpeg, .jpg allowed",
+          type: "warning",
+        });
+      }
+
+      setUploadedAvatar(file);
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setUserProfile((curr) => ({
+          ...curr,
+          avatar: event.target.result,
+        }));
+      };
+      reader.readAsDataURL(file);
     }
+  };
 
-    setButtonLoading(true);
-    const user = await storeData({
-      endpoint: `/v1/me`,
-      method: "PUT",
-      body: {
-        name: userProfile.name,
-        email: userProfile.email,
-      },
-      headers: {
-        "x-auth-token": session?.accessToken,
-      },
-    });
+  const handleSubmit = async () => {
+    try {
+      if (!userProfile.name) {
+        return setErrorName(true);
+      }
+      const formData = new FormData();
 
-    setButtonLoading(false);
-    return setToast({ message: "User profile updated", type: "success" });
+      formData.append("name", userProfile.name);
+      formData.append("email", userProfile.email);
+
+      if (uploadedAvatar) {
+        formData.append("avatar", uploadedAvatar);
+      }
+
+      setButtonLoading(true);
+
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/me`, {
+        body: formData,
+        headers: {
+          "x-auth-token": session?.accessToken,
+          "x-api-key": process.env.NEXT_PUBLIC_API_KEY,
+        },
+        method: "PUT",
+      });
+
+      setButtonLoading(false);
+      return setToast({ message: "User profile updated", type: "success" });
+    } catch (error) {
+      return setToast({ message: "Something went wrong", type: "error" });
+    }
   };
 
   return (
@@ -64,7 +106,7 @@ export default function Profile({ user, session }) {
             <Box
               position={"relative"}
               w={"fit-content"}
-              onClick={handleUpload}
+              onClick={() => fileInputRef.current.click()}
               _hover={{ cursor: "pointer" }}
             >
               <Avatar
@@ -84,6 +126,12 @@ export default function Profile({ user, session }) {
               >
                 <Icon boxSize={5} as={BsCamera} />
               </Flex>
+              <input
+                type="file"
+                style={{ display: "none" }}
+                ref={fileInputRef}
+                onChange={(e) => handleFileChange(e)}
+              />
             </Box>
             <Box ml={5} mt={3}>
               <Text fontSize={"18px"} fontWeight={"medium"}>
