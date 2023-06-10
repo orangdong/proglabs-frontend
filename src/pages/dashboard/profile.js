@@ -28,6 +28,7 @@ export default function Profile({ user, session }) {
     avatar: user.avatar,
   });
   const [errorName, setErrorName] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
   const [toast, setToast] = useToastHook();
   const [buttonLoading, setButtonLoading] = useState(false);
   const fileInputRef = useRef(null);
@@ -65,13 +66,21 @@ export default function Profile({ user, session }) {
 
   const handleSubmit = async () => {
     try {
+      const pattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
       if (!userProfile.name) {
         return setErrorName(true);
+      }
+
+      if (userProfile.email && !pattern.test(userProfile.email)) {
+        return setErrorEmail(true);
       }
       const formData = new FormData();
 
       formData.append("name", userProfile.name);
-      formData.append("email", userProfile.email);
+
+      if (userProfile.email) {
+        formData.append("email", userProfile.email);
+      }
 
       if (uploadedAvatar) {
         formData.append("avatar", uploadedAvatar);
@@ -142,7 +151,7 @@ export default function Profile({ user, session }) {
               </Text>
             </Box>
           </Flex>
-          <FormControl mt={5}>
+          <FormControl mt={5} isInvalid={errorEmail}>
             <FormLabel fontSize={"18px"} fontWeight={"medium"}>
               Email address
             </FormLabel>
@@ -163,6 +172,11 @@ export default function Profile({ user, session }) {
                 }))
               }
             />
+            {errorEmail ? (
+              <FormErrorMessage>Invalid email.</FormErrorMessage>
+            ) : (
+              ""
+            )}
           </FormControl>
           <FormControl mt={5}>
             <FormLabel fontSize={"18px"} fontWeight={"medium"}>
